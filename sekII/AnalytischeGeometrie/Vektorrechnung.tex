@@ -28,8 +28,12 @@
 \usepackage{systeme}
 \usepackage{gauss}
 \usepackage{wrapfig}
-
+\usetikzlibrary{external}
 \usetikzlibrary{3d}
+\tikzexternalize
+\tikzsetexternalprefix{figures/}
+\usepackage{rotating}
+
 \syscodeextracol{\quad\hfill}{\hfill}
 \sysautonum*{(\uppercase\expandafter{\romannumeral*})}
 \sysdelim..
@@ -38,7 +42,7 @@
 
 \tikzstyle{level 1}=[level distance=3.5cm, sibling distance=4.5cm]
 \tikzstyle{level 2}=[level distance=3.5cm, sibling distance=2cm]
-
+\tikzstyle{vector}=[-stealth,myblue,thick,line cap=round]
 
 
 % Define styles for bags and leafs
@@ -116,9 +120,9 @@
 		
 	}
 }
-\newcommand{\Hinweis}[1]{
+\newcommand{\Bemerkung}[1]{
 	\vspace*{0.3cm}
-	\begin{tcolorbox}[breakable,colback=yellow!10,colframe=yellow!65!black,title=\textbf{Hinweis:},width=\linewidth ]
+	\begin{tcolorbox}[breakable,colback=yellow!10,colframe=yellow!65!black,title=\textbf{Bemerkung:},width=\linewidth ]
 		{#1}
 	\end{tcolorbox}
 }
@@ -467,7 +471,7 @@ x&=7\\\\
 	\end{wrapfigure}
 	Dieser ist gerade der Pfeil vom Koordinatenursprung zum gegebenem Punkt $P$. Wir schreiben $\vec{0P}$.\\
 	Explizit konstruiert wird dieser indem man die Koordinaten des Punktes einfach in den Vektor schreibt. Für $P(x_1\,|\,x_2\,|\, ...\,|\, x_n)$ ist der Ortsvektor \Redbox{\[\vec{0P}=\Spvek{x_1;x_2;\vdots\,\,;x_n}\]}
-	Dieser Zusammenhang wird und das Untersuchen von geometrischen Figuren, gegeben durch Punkte, ermöglichen. Jedoch müssen wir uns zu erst das Rechnen mit Vektoren und die damit zusammenhängende geometrische Bedeutung anschauen.
+	Dieser Zusammenhang wird uns das Untersuchen von geometrischen Figuren, gegeben durch Punkte, ermöglichen. Jedoch müssen wir uns zu erst das Rechnen mit Vektoren und die damit zusammenhängende geometrische Bedeutung anschauen.
 	\Beispiel{
 		Gegeben Punkt $P=(3,-1,6)$.\quad Ortsvektor : $\vec{0P} = \Spvek{3;-1;6}$
 	}
@@ -512,7 +516,7 @@ x&=7\\\\
 	\vspace{0.1cm}
 	}
 	\subsubsection{Konstruktion von Vektoren aus Punkten}
-	Mit diesem Werkzeug können wir nun auch die Anfängliche Motivation für Vektoren berechnen: Den Vektor zwischen 2 Punkten berechnen. Eine Betrachtung der Abbildung Oben und der folgenden Abbildung sehen wir das:
+	Mit diesem Werkzeug können wir nun auch die Anfängliche Motivation für Vektoren berechnen: Den Vektor zwischen 2 Punkten. Eine Betrachtung der Abbildung oben und der folgenden Abbildung sehen wir das:
 	\Redbox{{\Large\[\color{dg}\vec{PQ}\color{black}=\color{red}\vec{0Q}\color{black} - \color{blue}\vec{0P}\color{black}\]}%
 	\begin{center}
 		\begin{tikzpicture}
@@ -528,8 +532,8 @@ x&=7\\\\
 			\draw[line width=2pt,dg,-stealth](5,1) --node[anchor=west]{$\vec{PQ}$} (2,4);
 		\end{tikzpicture}
 \end{center}}
-		Eine kleine Hilfe um sich die Formel oben zu merken ist es sie sich als Palindrom zu merken: $''PQQP''$.\\ Einen Vektor zwischen Punkten zu bilden ermöglicht uns nun Geometrische Strukturen gegeben durch punkte zu analysieren, indem wir die Vektoren zwischen ihnen analysieren. Dazu jedoch erst später mehr.
-		\Aufgabe{3.2.1.1 (Konstruktion von Vektoren aus gegebenen Punkten)}{
+		Eine kleine Hilfe um sich die Formel oben zu merken ist es sie sich als Palindrom zu merken: $''PQQP''$.\\ Einen Vektor zwischen Punkten zu bilden ermöglicht uns nun Geometrische Strukturen gegeben durch Punkte zu analysieren, indem wir die Vektoren zwischen ihnen analysieren. Dazu jedoch erst später mehr.
+		\Aufgabe{ (Konstruktion von Vektoren aus gegebenen Punkten)}{
 			\begin{multicols}{2}
 				\begin{enumerate}[(a)]
 					\item Berechne den Vektor $\vec{QP}$\\
@@ -550,7 +554,7 @@ x&=7\\\\
 	\subsection{Multiplikation}
 	Eine weitere Rechenoperation mit Vektoren ist die \textit{Multiplikation eines Vektors mit einem Skalar}. Skalar steht hierbei einfach für eine reelle Zahl. Die multiplikation läuft auch wieder komponentweise ab, so wird jeder Eintrag des Vektors mit diesem Skalar multipliziert.
 	\Redbox{\[\vec{v}=\Spvek{v_1;v_2;\vdots\,\,;v_n}\in\mathds{R}^n,\, c\in\mathds{R}\qquad \qquad c\cdot \vec{v}=c\cdot \Spvek{v_1;v_2;\vdots\,\,;v_n}=\Spvek{c\cdot v_1;c \cdot v_2;\vdots\,\,;c\cdot v_n}\]}
-	Geometrisch bedeutet die Multiplikation mit einem Skalar gerade die Streckung ($c>1$) oder Stauchung ($0<c<1$), oder Änderung der Richtung ($c<0$).
+	Geometrisch bedeutet die Multiplikation mit einem Skalar gerade die Streckung ($c>1$) oder Stauchung ($0<c<1$), oder Invertierung der Richtung ($c<0$).
 	\begin{center}
 		\begin{tikzpicture}
 			\draw[thin,gray!40] (-7,-3) grid (7,3);
@@ -563,7 +567,7 @@ x&=7\\\\
 			\draw[line width=1pt,darkred,-stealth](0,0) --node[anchor=south east]{$-2\vec{v}$} (-6,-2);
 		\end{tikzpicture}
 	\end{center}
-	\Aufgabe{3.3.0.1 (Multiplikation mit einem Skalar) }{
+	\Aufgabe{ (Multiplikation mit einem Skalar) }{
 		Berechne $\vec{a}\cdot c$
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
@@ -575,7 +579,7 @@ x&=7\\\\
 		\end{multicols}
 	\vspace{0.1cm}
 	}
-	\Aufgabe{3.3.0.2 (Rückrechnung Multiplikation mit einem Skalar) }{
+	\Aufgabe{ (Rückrechnung Multiplikation mit einem Skalar) }{
 		Finde $\vec{b}$ so dass: $\vec{b}\cdot c = \vec{a}$
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
@@ -587,7 +591,7 @@ x&=7\\\\
 		\end{multicols}
 		\vspace{0.1cm}
 	}
-\Aufgabe{3.3.0.3 (Rückrechnung Multiplikation mit einem Skalar) }{
+\Aufgabe{(Rückrechnung Multiplikation mit einem Skalar) }{
 	Finde $c$ so dass: $\vec{b}\cdot c = \vec{a}$
 	\begin{multicols}{2}
 		\begin{enumerate}[(a)]
@@ -607,7 +611,7 @@ x&=7\\\\
 		Es gilt:{\large{\[\vec{0M}= \frac{1}{2}\left(\vec{0A} + \vec{0B}\right)\]}}
 	}
 	\begin{center}
-		\begin{tikzpicture}
+		\begin{tikzpicture}[scale=1.5]
 			\draw[thin,gray!40] (-1,-1) grid (6,4);
 			\draw[<->] (-1,0)--(6,0) node[right]{$x$};
 			\draw[<->] (0,-1)--(0,4) node[above]{$y$};
@@ -624,8 +628,9 @@ x&=7\\\\
 			\draw[line width=1pt,red,-stealth](0,0) --node[below right]{$\vec{0M}$} (2.5,1.5);
 		\end{tikzpicture}
 	\end{center}
-	Wie in der Abbildung auch zu sehen ist, ist $M$ eben der Mittelpunkt des von $A$ und $B$ aufgespannten Parallelogramms.
-	\Aufgabe{3.3.1.1 (Finde den Mittelpunkt der Strecken)}{
+	Wie in der Abbildung auch zu sehen ist, ist $M$ eben der Mittelpunkt des von $A$ und $B$ aufgespannten 
+	Parallelogramms und damit auch der Mittelpunkt der beiden Diagonalstrecken.
+	\Aufgabe{(Finde den Mittelpunkt der Strecken)}{
 	\begin{multicols}{2}
 		\begin{enumerate}[(a)]
 			\item Berechne $M$\\
@@ -642,7 +647,7 @@ x&=7\\\\
 			$P(4\,|\,2 \,|\,-10),\, R(0\,|\,4 \,|\,-4)$
 		\end{enumerate}
 \end{multicols}}
-	\Aufgabe{3.3.1.1 (Rückrechnung Mittelpunkt der Strecken)}{
+	\Aufgabe{(Rückrechnung Mittelpunkt der Strecken)}{
 		Berechne den Punkt $B$ sodass für $\overline{AB}$ der Mittelpunkt mit dem gegebenem übereinstimmt.
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
@@ -673,8 +678,8 @@ x&=7\\\\
 			
 		\end{tikzpicture}
 	\end{center}
-	Aus der Abbildung ist schnell zu entnehmen, dass die Länge aus dem Satz des Pythagoras berechnet werden kann, was auchauf $n$ Dimensionen erweitert werden kann, indem man $n-1$ aufeinander aufbauende und rechtwinklige Dreiecke bildet. 
-	\Definition{(Betrag)}{
+	Aus der Abbildung ist schnell zu entnehmen, dass die Länge aus dem Satz des Pythagoras berechnet werden kann, was ebenso auf $n$ Dimensionen erweitert werden kann, indem man $n-1$ aufeinander aufbauende und rechtwinklige Dreiecke bildet. 
+	\Definition{(\textbf{Betrag})}{\label{betrag}
 	\large{\[\vec{v}=\Spvek{v_1;v_2;\vdots\,\,; v_n}\in \mathds{R}^n:\qquad \qquad |\,\vec{v}\,|=\sqrt{v_1^2 + v_2^2 + ... + v_n^2}\] }}
 	Über den Betrag können wir jetzt viele geometrische Objekte validieren, indem wir die Vektoren zwischen ihren Punkten bilden. So müssen zu Beispiel 2 dieser Vektoren bei einem gleichschenkligen Dreieck gleich lang sein.\\
 	Es sollte auch klar sein, dass die Multiplikation mit einem Skalar folgendermaßen mit dem Betrag zusammen hängt.
@@ -682,8 +687,22 @@ x&=7\\\\
 		Für $r\in \mathds{R}$ und $\vec{v} \in \mathds{R}^n$
 	\[|r\cdot \vec{v}|=|r|\cdot|\vec{v}|\]}
 	Denn wir verlängern, bzw verkürzen, den Vektor ja gerade um $r$.
-	\Aufgabe{3.4.1 (Betrag berechnen)}{
-		Berechne den Abstand zwischen den 2 Punkten:
+	\Definition{(Normalisierter Vektor)}{
+		Einen Vektor $\vec{v}\in \mathds{R}^{n}$ nennen wir \textbf{ normalisiert}, falls er genau die Länge 1 hat 
+		{\large\[
+			|\vec{v}\,| = 1
+	.\]} 
+		Wir können dabei jeden Vektor (außer den Nullvektor) \textbf{normalisieren} indem wir ihn durch
+		seine eigene Länge Teilen \[
+		\vec{v_n} := \frac{\vec{v}}{|\vec{v}\,|}
+		.\] 
+
+	}
+	Mit diesem Werkzeug kann man nun auch sehr einfach Längen berechnen, denn wenn ich zum Beispiel einen 
+	normalisierten
+	Vektor  $\vec{v_n}$ 5 mal aneinander setze erhalte ich gerade einen Vektor der Länge $5$.
+	\Aufgabe{ (Betrag berechnen)}{
+		Berechne den Abstand zwischen den 2 Punkten und normalisiere die Abstandsvektoren $\vec{AB}$:
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
 				\item $A(4\,|\,-3\,|\,5),\, B(\,2 |\,8 \,|\, 6)$
@@ -693,7 +712,7 @@ x&=7\\\\
 			\end{enumerate}
 		\end{multicols}
 	}
-	\Aufgabe{3.4.2 (Betrag Rückrechnung) }{
+	\Aufgabe{ (Betrag Rückrechnung) }{
 		Berechne die Variable $x$ so dass die Punkte den gegebenen Abstand ($d$) haben. (Tipp: p-q-Formel)
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
@@ -715,10 +734,10 @@ x&=7\\\\
 	\Definition{(Winkel zwischen 2 Vektoren)}{
 	Sei $\, \vec{v},\,\vec{u}\in\mathds{R}^n$\large{\[\alpha= \sphericalangle(\vec{v},\vec{u})=cos^{-1}\left(\frac{\vec{v}\circ \vec{u}}{|\vec{v}|\cdot |\vec{u}|}\right)\]}
 	}
-	Aus der Oberen Formel ist auch schnell zu sehen, dass für 2 rechtwinklige Vektoren gilt
+	Aus der oberen Formel ist auch schnell zu sehen das für 2 rechtwinklige Vektoren gilt
 	{\large{\[\vec{u}\circ \vec{v}=0 \]}}\\
-	Mit diesen Werkzeugen können wir nun auch Winkel an geometrischen Figuren untersuchen, schauen ob 2 Vektoren in die gleiche Richtung zeigen und sehr schnell per Hand auf Rechtwinkligkeit prüfen.
-	\Aufgabe{3.5.1 (Winkel zwischen Vektoren)}{
+	Mit diesen Werkzeugen können wir nun auch Winkel an geometrischen Figuren untersuchen, schauen ob 2 Vektoren in die gleiche Richtung zeigen oder diese sehr schnell per Hand auf Rechtwinkligkeit prüfen.
+	\Aufgabe{ (Winkel zwischen Vektoren)}{
 		Berechne den Winkel zwischen den gegebenen Vektoren.
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
@@ -728,12 +747,12 @@ x&=7\\\\
 			\end{enumerate}
 		\end{multicols}
 	}
-	\Aufgabe{3.5.2 (Winkel zwischen Vektoren)}{
+	\Aufgabe{ (Winkel zwischen Vektoren)}{
 		Welche Vektoren stehen senkrecht zueinander.
 		\[\vec{a}=\Spvek{2;-1;-2},\, \vec{b}=\Spvek{-2;6;-6},\, \vec{c}=\Spvek{3;1;0}, \vec{d}=\Spvek{1;4;-1}\]
 	}
 	\subsection{Lineare Abhängigkeit}
-	Eine weitere Methode zu überprüfen ob 2 Vektoren in die gleiche Richtung zeigen ist zu überprüfen ob diese linear abhängig sind. Das heißt der eine Vektor kann als Vielfaches des anderen dargestellt werden.
+	Eine weitere Methode um zu überprüfen ob 2 Vektoren in die gleiche Richtung zeigen ist zu überprüfen ob diese linear abhängig sind. Das heißt der eine Vektor kann als Vielfaches des anderen dargestellt werden.
 	\Redbox{Zwei Vektoren $\vec{v},\,\vec{u}\in\mathds{R}^n$ sind genau dann linear abhängig wenn es ein $k\in\mathds{R}$ gibt das folgende Gleichung erfüllt:
 	{\large\[k\cdot \vec{v}=\vec{u}\]}
 	\begin{align*}
@@ -756,7 +775,7 @@ x&=7\\\\
 			\draw[line width=1pt,red,-stealth](0,0) --node[below right]{$\vec{u}=\color{black}3\cdot \color{blue}\vec{v}\,$} (6,2);
 		\end{tikzpicture}
 	\end{center}
-	Natürlich ist es Möglich die Frage der linearen Abhängigkeit auf beliebig viele Vektoren zu erweitern. Dabei beudeutet linear abhängig zu sein für mehr als 2 Vektoren, dass einer von ihnen als Linearekombination der anderen dargestellt werden kann. 
+	Natürlich ist es möglich die Frage der linearen Abhängigkeit auf beliebig viele Vektoren zu erweitern. Dabei beudeutet linear abhängig zu sein für mehr als 2 Vektoren, dass einer von ihnen als Linearekombination der anderen dargestellt werden kann. 
 	\Beispiel{
 	Seien $\Spvek{-1;1},\,\Spvek{2;0},\, \Spvek{4;2}$ Vektoren.\\ Wir können nun $\Spvek{4;2}$ als Linearkombination der anderen beiden darstellen:
 	\[2\cdot \Spvek{-1;1}+ 3\cdot\Spvek{2;0} = \Spvek{-2 + 6;2+0}=\Spvek{4;2}\]
@@ -774,7 +793,7 @@ x&=7\\\\
 		\end{tikzpicture}
 \end{center}}
 	Bevor wir definieren wie wir Lineare Abhängigkeit für mehr als 2 Vektoren nun genau ausrechnen sollte eine kleine Vorbemerkung gemacht werden.\\
-	Eine Menge von $N$ Vektoren im Vektorraum $\mathds{R}^n$ ist immer linear abhängig falls $N>n$. In solch einem fall braucht man also nicht zu rechnen, sondern kann direkt die Antwort geben.\\
+	Eine Menge von $N$ Vektoren im Vektorraum $\mathds{R}^n$ ist immer linear abhängig falls $N>n$. In solch einem Fall braucht man also nicht zu rechnen, sondern kann direkt die Antwort geben.\\
 	\Definition{(Lineare Abhängigkeit)}{
 		Eine Menge, oder auch System genannt, von $N$ Vektoren im Vektorraum $\mathds{R}^n$:
 		$\vec{v}_1,\,\vec{v}_2,\,...,\,\vec{v}_N\in\mathds{R}^n$. Diese sind linear abhängig falls es $N-1$ Variablen gibt $k_1,\,k_2,\,...,\,k_{N-1}\in \mathds{R}$ sodass gilt:
@@ -788,8 +807,8 @@ x&=7\\\\
 			\text{Falls die Lösungsmenge nicht leer ist}\text{ gilt: }& \\\vec{v}_1,\,\vec{v}_2,...,\vec{v}_N\text{ sind linear abhängig}&
 		\end{align*}
 	}
-	Gerade die Lineare Abhängigkeit wird erst wirklich wichtig wenn man zum Thema Geraden und Ebenen kommt, denn dort stützen sich die Lösungen vieler Aufgaben auf dieses Prinzip. Momentan wird uns dieses Prinzip nur helfen um Parallelität zu überprüfen.
-	\Aufgabe{3.6.1 (Lineare Abhängigkeit zwischen 2 Vektoren) }{
+	Gerade die Lineare Abhängigkeit wird erst wirklich wichtig wenn man zum Thema Geraden und Ebenen kommt, denn dort stützen sich die Lösungen vieler Aufgaben auf dieses Prinzip. Momentan wird uns dieses Prinzip nur helfen um Parallelität von Vektoren zu überprüfen. 
+	\Aufgabe{ (Lineare Abhängigkeit zwischen 2 Vektoren) }{
 		Überprüfe ob die beiden Vektoren $\vec{u},\vec{v}$ linear unabhängig sind.
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
@@ -803,7 +822,7 @@ x&=7\\\\
 		\end{multicols}
 	\vspace{0.1cm}
 	}
-	\Aufgabe{3.6.2 (Lineare Abhängigkeit zwischen mehr als 2 Vektoren)}{
+	\Aufgabe{ (Lineare Abhängigkeit zwischen mehr als 2 Vektoren)}{
 		Überprüfe $\vec{u},\vec{v},\vec{w}$ auf lineare Unabhängigkeit.
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
@@ -834,10 +853,13 @@ x&=7\\\\
 		Seien $\vec{a}=\Spvek{a_1;a_2;a_3},\,\vec{b}=\Spvek{b_1;b_2;b_3}\in \mathds{R}^3$\\
 		{\large{\[\vec{a} \times \vec{b}= \Spvek{a_2 b_3 - a_3 b_2; a_3 b_1 - a_1 b_3; a_1 b_2 - a_2 b_1}\]}}
 	}
-	Auch das Kreuzprodukt ist jetzt noch nicht interessant, wird aber auch beim Thema Ebenen wieder benutzt.
+	Auch das Kreuzprodukt ist jetzt noch nicht sehr interessant, wird aber auch beim Thema Ebenen wieder benutzt.
+	Man kann es dabei auch für die Berechnung von Flächeninhalten von Dreiecken und Vierecken aufgespannt durch 
+	zwei Vektoren verwenden.
 	
 	\subsection{Geometrische Eigenschaften}
-	Im folgenden zähle ich ein paar geometrische Eigenschaften auf, und Wege diese über analytische Geometrie zu verifizieren.
+	Im folgenden zähle ich ein paar geometrische Eigenschaften auf, und Wege diese über analytische Geometrie 
+	zu verifizieren.
 	\begin{itemize}
 		\item \textbf{Länge} einer Strecke $\overline{AB}=l$: \[l=\left\vert\, \vec{AB} \,\right \vert\]
 		\item \textbf{Rechtwinkligkeit} von 2 Strecken $\overline{AB},\overline{BC}$:
@@ -850,7 +872,7 @@ x&=7\\\\
 					\[\vec{AB}\circ\vec{BC} = |\vec{AB}|\cdot |\vec{BC}|\quad\text{ oder }\quad\vec{AB}\circ\vec{BC} = -|\vec{AB}|\cdot |\vec{BC}|\]
 			\end{enumerate}
 	\end{itemize} 
-	\Aufgabe{3.8.1 (Vierecke)}{
+	\Aufgabe{(Vierecke)}{
 		Überprüfe ob das Viereck $ABCD$ ein Parallelogramm, eine Raute oder ein Trapez ist.
 		Berechne den Flächeninhalt sollte es ein Parallelogramm sein.
 		
@@ -863,7 +885,7 @@ x&=7\\\\
 			\end{enumerate}
 		
 	}
-	\Aufgabe{3.8.2 (Dreiecke)}{
+	\Aufgabe{(Dreiecke)}{
 		Überprüfe ob das Dreieck $ABC$ gleichseitig, gleichschenklig oder rechtwinklig ist.
 		Gebe den Umfang und Flächeninhalt an.		
 		\begin{enumerate}[(a)]
@@ -881,11 +903,12 @@ x&=7\\\\
 %3DIMENSIONALE FIGUREN
 	\newpage
 	\section{Geraden}
-	Mit unserem neugewonnen Werkzeug den Vektoren können wir jetzt anfangen andere Geometrische Strukturen zu verallgemeinern und in dieser ''Sprache'' formulieren. Geraden wurden von uns, im 2 dimensionalen Fall, bereits in der 8. Klasse beschrieben. Dabei ist die Geradengleichung \[y=\color{red}m\color{black}x+\color{blue}n\color{black}\]
+	Mit unserem neu gewonnen Werkzeug, den Vektoren, können wir jetzt anfangen andere Geometrische Strukturen zu verallgemeinern und in dieser ''Sprache'' formulieren. Geraden wurden von uns, im 2 dimensionalen Fall, bereits in der 8. Klasse beschrieben. Dabei ist die Geradengleichung \[y=\color{red}m\color{black}x+\color{blue}n\color{black}\]
 	Daran können wir erkennen was eine Gerade ausmacht:
 	\begin{itemize}
-		\item Ein Punkt auf der Gerade ($\color{blue}n\color{black}$)
-		\item Richtung in die sie verläuft ($\color{red}m\color{black}$)
+		\item Ein Punkt auf der Gerade ($\color{blue}n\color{black}$), eben der Schnittpunkt mit der 
+			$y$-Achse
+		\item Richtung in die sie verläuft ($\color{red}m\color{black}$), der Anstieg der Gerade
 	\end{itemize}
 	Diese beiden Eigenschaften können wir bereits mit Vektoren beschreiben. Wobei der Punk vom Stützvektor beschrieben wird, die Richtung von einer Variable als Skalar und einem Richtungsvektor.
 	\Definition{(Gerade)}{
@@ -893,7 +916,9 @@ x&=7\\\\
 		\large
 		\begin{align*}
 			\color{lightblue}g\color{black}: \,\quad\qquad\vec{x}&=\color{blue}\vec{s}\color{black} + t\cdot\color{red}\vec{r}\color{black} \\\\
-			\color{lightblue}g\color{black}: \quad\Spvek{x_1;x_2;\vdots \,\,;x_n}&=\Spvek{s_1;s_2;\vdots \,\,;s_n} + t\cdot \Spvek{r_1;r_2;\vdots \,\,;r_n}
+			\color{lightblue}g\color{black}: \quad\Spvek{x_1;x_2;\vdots \,\,;x_n}&=\Spvek{\color{blue}
+			s_1;\color{blue}s_2;\vdots \,\,;\color{blue}s_n} + t\cdot \Spvek{\color{red}r_1;
+			\color{red}r_2;\vdots \,\,;\color{red}r_n}
 		\end{align*}
 	}
 	\begin{center}
@@ -908,20 +933,31 @@ x&=7\\\\
 			\draw[line width=2pt,blue,-stealth](0,0) --node[anchor=north west]{$\vec{s}$} (1,1);
 		\end{tikzpicture}
 	\end{center}
-	Wie auf dem Bild zu sehen kann je nach wahl von $t$ jeder Punkt auf der Gerade beschrieben werden. Es sollte nun auch klar sein woher die Namen ''Stützvektor'' und ''Richtungsvektor'' kommen.
-
+	Wie auf dem Bild zu sehen kann je nach Wahl von $t$ jeder Punkt auf der Gerade beschrieben werden. 
+	Es sollte nun auch klar sein woher die Namen ''Stützvektor'' und ''Richtungsvektor'' kommen.
+	\Bemerkung{\label{BemGerGLS}
+		Dabei steht unsere Gerade für ein Gleichungssystem mit $n$ Zeilen:
+		 \begin{align*}
+			 x_1 &= s_1 + t\cdot r_1\\
+			 x_2 &= s_2 + t\cdot r_2\\
+			     &\vdots\\
+			 x_n &= s_n + t\cdot r_n
+		.\end{align*}
+	}
 	\subsection{Konstruktion von Geraden}
-	Wie auch schon für $y=mx+n$ können wir solche Geraden anhand von gegebenen Eigenschaften Konstruieren. Solche Eigenschaften können zum Beispiel zwei gegebenen Punkte, welche auf der Gerade liegen sollen, sein. Selterner wird ein Punkt von der Gerade gegeben und ein Richtungsvektor in welche die Gerade verlaufen soll.
+	Wie auch schon für $y=mx+n$ können wir solche Geraden anhand von gegebenen Eigenschaften Konstruieren. Solche Eigenschaften können zum Beispiel zwei gegebenen Punkte, welche auf der Gerade liegen sollen, sein. 
+	Seltener wird ein Punkt von der Gerade gegeben und ein Richtungsvektor in welche die Gerade verlaufen soll.
 	\subsubsection{Gegeben Punkt und Richtung}
-	Dies macht uns die konstruktion besonders einfach.
+	Dies macht uns die Konstruktion besonders einfach.
 	Sei $P$ der gegebene Punkt, $\vec{r}$ der Richtungsvektor. Die Gerade $g$, welche durch $P$ verläuft mit Richtung $\vec{r}$ wird so konstruiert:
 	\Redbox{\large\[g: \,\vec{x} = \overline{0P} + t\cdot \vec{r}\]}
 	\subsubsection{Gegeben zwei Punkte}
 	Etwas schwieriger wird die Konstruktion mit lediglich 2 gegebenen Punkten.\\
-	Sei $A,B$ gegebene Punkte, dann konstruieren wir $g$, indem wir einen der gegebenen Punkte als Stützvektor wählen und für den Richtungsvektor den Vektor, durch den wir von Punkt $A$ zu Punkt $B$ kommen, wählen.
+	Seien $A,B$ gegebene Punkte, dann konstruieren wir $g$, indem wir einen der gegebenen Punkte als Stützvektor wählen und für den Richtungsvektor den Vektor, durch welchen wir von Punkt $A$ zu Punkt $B$ kommen, wählen.
 	\Redbox{\large \[g:\, \vec{x}=\overline{0A} +t\cdot \overline{AB} \]}
 	\subsection{Gegeben $f(x)=mx+n$ für $\mathds{R}^2$}
-	Sei $f(x)=mx+n$ (eine lineare Funktion) gegeben. Diese können wir nun in die neu gelernte Geradenform in $\mathds{R}^2$ umwandeln. Wie immer brauchen wir einen Punkt durch welchen die Gerade verläuft und ihrer Richtung. Da $n$ der Schnittpunkt mit der $y$-Achse ist haben wir bereits den Stützvektor {\small$\vec{s}=\Spvek{0;n}$}. Aus der Bruchdarstellung von $m=\frac{m_y}{m_x}$ können wir das Anstiegsdreieck entnehmen, welches dem Richtungsvektor entspricht {\small $\, \vec{r}=\Spvek{m_x;m_y}$} 
+	Sei $f(x)=mx+n$ (eine lineare Funktion) gegeben. Diese können wir nun in die neu gelernte Geradenform in $\mathds{R}^2$ umwandeln. Wie immer brauchen wir einen Punkt durch welchen die Gerade verläuft und ihrer Richtung. Da $n$ der Schnittpunkt der Gerade mit der $y$-Achse ist haben wir bereits den Stützvektor {\small$\vec{s}=\Spvek{0;n}$}. Aus der Bruchdarstellung von $m=\frac{m_y}{m_x}$ können wir das Anstiegsdreieck entnehmen, 
+	welches dem Richtungsvektor entspricht {\small $\, \vec{r}=\Spvek{m_x;m_y}$} 
 	\begin{center}
 		\begin{tikzpicture}
 			\draw[thin,gray!40] (-1,-1) grid (7,3);
@@ -937,8 +973,8 @@ x&=7\\\\
 	\subsection{Lagebeziehung Punkt und Gerade}
 	Für einen gegebenen Punkt $P$ und Gerade $g$ kann man entscheiden ob $P$ auf $g$ liegt. Sollte dies nicht der Fall sein ist es weiterhin möglich den Punkt $Q$ auf $g$ anzugeben, welcher am nächsten an $P$ liegt.
 	\subsubsection{Liegt der Punkt $P$ auf der Gerade?}
-	Gegeben sei Punkt $P=(P_x,P_y,P_z)$ und Gerade $g:\,\, \vec{x}=\Spvek{s_x;s_y;s_z} + t \cdot \Spvek{r_x;r_y;r_z}$.\\
-	Um zu überprüfen ob $P$ auf $g$ liegt schaffen wir ein Gleichungssystem:
+	Gegeben sei Punkt $P(P_x,P_y,P_z)$ und Gerade {\small$g:\,\, \vec{x}=\Spvek{s_x;s_y;s_z} + t \cdot \Spvek{r_x;r_y;r_z}$}.\\
+	Um zu überprüfen ob $P$ auf $g$ liegt schaffen wir ein Gleichungssystem indem wir beides gleichsetzen.
 	\Redbox{\begin{align*}
 			\Spvek{P_x;P_y;P_z}&=\Spvek{s_x;s_y;s_z} + t \cdot \Spvek{r_x;r_y;r_z}&&\bigg\vert -\Spvek{s_x;s_y;s_z} \\
 			\Spvek{P_x - s_x;P_y-s_y;P_z-s_z} &= t \cdot \Spvek{r_x;r_y;r_z} \qquad \begin{bmatrix}
@@ -971,7 +1007,7 @@ x&=7\\\\
 			(\vec{0P} - \vec{0Q})\circ \vec{r} &= 0\\
 			(\vec{0P} - (\vec{s} + k\cdot \vec{r}))\circ \vec{r} &= 0
 		\end{align*}
-	Diese Gleichung muss so lediglich nach $k$ umgestellt werden und anschließend $Q$ über die Geradengleichung berechnet werden. Der Abstand darauf folgend wie bereits bekannt.
+	Diese Gleichung muss so lediglich nach $k$ umgestellt werden und anschließend $Q$ über die Geradengleichung berechnet werden. Der Abstand darauf folgend wie bereits bekannt aus dem Vektor zwischen $P$ und  $Q$.
 	\subsection{Lagebeziehungen zwischen Geraden und Geraden}
 	Auch kann die Lage zwischen zwei Geraden ermittelt werden, das heißt ob diese sich schneiden, parallel sind, windschief stehen oder aufeinander liegen.\\
 	Gegeben Geraden $g:\, \vec{x}_g = \vec{s}_g + t\cdot \vec{r}_g,\quad h:\, \vec{x}_h = \vec{s}_h + k\cdot \vec{r}_h$\\
@@ -999,8 +1035,90 @@ x&=7\\\\
 		t_x={r_{h_x}}/{r_{g_x}}\\t_y={r_{h_y}}/{r_{g_y}}\\t_z={r_{h_z}}/{r_{g_z}}
 	\end{bmatrix}\]
 	Falls $t_x=t_y=t_z$ sind die Richtungsvektoren linear abhängig und damit die beiden Geraden parallel.\\ Sonst sind die Geraden windschief.
+
+	\subsubsection{Schnittwinkel zwischen Geraden}
+	Sollten sich zwei Geraden $g_1$ und  $g_2$ schneiden kann es sinnvoll sein ihren Schnittwinkel zu bestimmen. 	     Dabei gehen wir sehr ähnlich zur Berechnung des Winkels zwischen zwei Vektoren vor. Der Schnittwinkel 
+	zwischen zwei Geraden ist dabei der kleinste Winkel zwischen ihnen.
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[thin,gray!40] (-1,-2) grid (7,3);
+			\draw[<->] (-1,0)--(7,0) node[right]{$x$};
+			\draw[<->] (0,-2)--(0,3) node[above]{$y$};
+			\begin{scope}[shift={(1.35,1.12)}]
+				\draw (0,0) -- (340:1.3cm) arc (340:380:1.3cm);
+				\draw (1.0,0.0) node {$\alpha$};
+			\end{scope}
+			\draw[line width=2pt,lightblue](-1,0.33) -- (7,3)node[anchor=north west]{$g_1$};
+			\draw[line width=2pt,red](-1,2) -- (7,-1) node [anchor=north west] {$g_2$};
+			\draw (1.35,1.12) node[]{$\mathbb{\times}$};
+		\end{tikzpicture}
+	\end{center}
+
+
+
+
+	\Definition{(Schnittwinkel zwischen Geraden)}{
+		Seien $g_1$ und  $g_2$ zwei sich schneidende Geraden mit den jeweiligen 
+		Richtungsvektoren  $r_1$ und  $r_2$. Für ihren \textbf{Schnittwinkel} $\alpha$ 
+		 gilt dann 
+		\large\[
+		\cos \left( \alpha \right) = \frac{|\vec{r_1}\circ \vec{r_2}|}{|\vec{r_1}| \cdot  | \vec{r_2}|} 
+		\;\;.\] 
+	}
+	\begin{center}
+		\begin{tikzpicture}[>=latex,every node/.style={draw,rectangle, rounded corners,minimum width={2em},node distance=2em}]
+			\node (one) {Gegeben: Geraden $g_1:\; \vec{x}=\vec{s_1} + t_1 \cdot \vec{r_1}$ und 
+				$g_2:\; \vec{x}=\vec{s_2} + t_2 \cdot  \vec{r_2}$};
+			\node [below of=one,node distance=5em](three) {\parbox{6.2cm}{\; Ist $\vec{r_1}$ linear
+						abhängig von $\vec{r_2}$ ?
+						{\large\[\vec{r_1}  \mid  \mid  \vec{r_2} \quad ?\]}
+	\qquad \quad\; Ja \qquad\qquad Nein}};
+\node [below right of=three,node distance=10em] (four) {\parbox{4.2cm}{Die Geraden \textbf{schneiden} einander
+									oder sind \textbf{windschief}.}};
+\node [below left of=three, node distance=10em] (five) {\parbox{4.6cm}{Die Geraden liegen \textbf{parallel} 
+			zu einander 
+	oder sind \textbf{identisch} }};
+
+\node [below of=five,node distance = 5em] (six) {\parbox{4cm}{Liegt $\vec{s_1}$ auf $g_2$ ? \\ 
+	\hspace*{0.8cm}  Ja  \qquad Nein}};
+	\node [below left of=six,node distance= 7em] (seven) {\parbox{3cm}{Die beiden Geraden $g_1$ und  $g_2$ sind 
+		\textbf{identisch}.}};
+	\node [below right of=six, node distance = 7em] (eight) {\parbox{3cm}{Die beiden Geraden $g_1$ und  $g_2$
+		liegen \textbf{parallel} zueinander.}};
+	\node [below right of=four,node distance=10em] (nine) {\parbox{5cm}{Stelle ein Gleichungssystem aus den 
+							beiden
+							Geraden $g_1$ und  $g_2$ auf indem du sie gleichsetzt.  \[
+							\vec{s_1} + t_1\cdot \vec{r_1} = \vec{s_2} + t_2 \cdot 
+							\vec{r_2}
+							.\] }};
+			\node[below of=nine,node distance=7em] (ten) {\parbox{6cm}{ Löse das Gleichungssystem. Du
+						erhältst die Lösungsmenge\\
+				$\mathds{L}= \qquad \left\{t_{1_{\mathds{L}}}, t_{2_\mathds{L}}\right\}\qquad\quad 
+		\emptyset $}};
+		\node[below left of=ten,node distance=12em] (eleven) {\parbox{5cm}{
+			Die Geraden $g_1$ und  $g_2$ \textbf{schneiden} einander im Schnittpunkt $S$, berechnet
+			durch \[
+				\vec{0S} = \vec{s_1} + t_{1_\mathds{L}}\cdot \vec{r_1}
+			.\] 		} };
+		\node[below right of=ten,node distance=8em] (twelve) {\parbox{4cm}{
+					Die Geraden $g_1$ und  $g_2$ stehen \textbf{windschief} zueinander.	
+		 			} };
+			\draw [->] (one) -- (three);
+			\draw [->] (three) -- (four) ;
+			\draw [->] (three) -- (five);
+			\draw [->] (five) -- (six);
+			\draw [->] (six) -- (seven) ;
+			\draw [->] (six) -- (eight);
+			\draw [->] (four) -- (nine);
+			\draw [->] (ten) -- (eleven);
+			\draw [->] (nine) -- (ten);
+			\draw [->] (ten) -- (twelve);
+
+	\end{tikzpicture}
+		
+	\end{center}
 	\subsection{Aufgaben}
-	\Aufgabe{1.4.1: (Konstruktion gegeben 2 Punkte)}{
+	\Aufgabe{ (Konstruktion gegeben 2 Punkte)}{
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
 				\item $A=(2\,|\,5\,|\,8),\, B=(1\,|\,2\,|\,9)$
@@ -1012,7 +1130,7 @@ x&=7\\\\
 			\end{enumerate}
 		\end{multicols}
 	}
-	\Aufgabe{1.4.2: (Lagebeziehung Punkt - Gerade)}{
+	\Aufgabe{ (Lagebeziehung Punkt - Gerade)}{
 		\begin{multicols}{2}
 			\begin{enumerate}[(a)]
 				\item $g:\, \vec{x}=\Spvek{3;2;-3}+ t\cdot \Spvek{1;0;1}$\\\\
@@ -1030,7 +1148,7 @@ x&=7\\\\
 			\end{enumerate}
 		\end{multicols}
 	}
-	\Aufgabe{1.4.3: (Lagebeziehung Gerade - Gerade)}{
+	\Aufgabe{ (Lagebeziehung Gerade - Gerade)}{
 		\begin{multicols}{2}
 			Untersuche die Lagebeziehungen der gegebenen Geraden untereinander:
 			\begin{enumerate}[(a)]
@@ -1054,10 +1172,1281 @@ x&=7\\\\
 	}
 	\newpage
 	\section{Ebenen}
+	Wir haben bisher gesehen wie wir über Vektoren Geometrische Strukturen im $n$-dimensionalen Raum untersuchen können. Eine dieser Strukturen ist die Gerade, eine Einbettung der Zahlengerade in den Raum. 
+	\Bemerkung{Man spricht hierbei auch von einem eindimensionalen (affinen) Unterraum. Affin bedeutet hierbei 
+	vom Ursprung verschoben, also mit einem Stützvektor $\neq \vec{0}$. Sollte unsere Gerade nämlich 
+	durch den Ursprung verlaufen (Stützvektor $=\vec{0}$)  können wir zwei Punkte der Geraden Addiern und 
+	erhalten wiederum einen Punkt auf dieser Geraden. Die Punkte sind desshalb eindeutig durch ihren 
+	zugehörigen Koeffizienten des Richtungsvektors bestimmt.}
+	 Dieses Prinzip der Geraden können wir nun verallgemeinern. Statt eine eindimensionale Struktur wollen
+	 wir eine zweidimensionale Struktur schaffen: Eine Ebene. 
+	 Diese können wir uns wie eine Fläche vorstellen die sich in alle Richtungen unendlich weit ausbreitet. 
+	 Wir legen also unser bekanntes 2-Dimensionales Koordinatensystem einfach in einer
+	 beliebigen Ausrichtung und Verschiebung in den Raum.
+	\begin{center}
+		\begin{tikzpicture}
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-9:9,
+						domain y = -9:9,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = green!70!black] {x + y -1};
+						\draw (0,0,0) -- (-8,0,0);
+						\draw (0,0,0) -- (0,0,20);
+						\draw (0,0,0) -- (0,-8,0);
+
+						
+					\end{axis}
+					
+		\end{tikzpicture}
+	\end{center}
+	Wir werden nun mehrere Darstellungsformen für Ebenen kennen lernen. Jede davon hat bestimmte Vor- und 
+	Nachteile, welche von ihrer Handhabung und Einfachheit für bestimmte Berechnungen kommen.
+	Eine Zusammenfassung dieser erhaltet ihr nach der Einführung der verschiedenen Formen.
+
 	\subsection{Von Gerade zur Ebene}
-	\subsection{Darstellungsformen}
-	\subsubsection{Parameterform}
-	\subsubsection{Achsenabschnittsform}
-	\subsubsection{Hessische Normalform}
+	Um von der Definition einer Geraden zu der der Ebene zu kommen müssen wir lediglich einen Schritt vollziehen: eine weitere Dimension bzw. Richtung hinzuzufügen. Also brauchen wir einen weiteren Richtungsvektor 
+	sowie eine zugehörigen Koeffizienten-Variable.
+	\Definition{Ebene (Parameterform)}{
+		Eine Ebene $\color{lightblue}E\color{black}$ im $n$-Dimensionalen Raum wird beschrieben durch den Stützvektor $\color{blue}\vec{s}\color{black}\in\mathds{R}^n$ und die beiden voneinander linear unabhängigen 
+		Richtungsvektoren $\color{red}\vec{r_1}\color{black}\in\mathds{R}^n$ und  $\color{green}\vec{r_2}\color{black}\in\mathds{R}^n$ sowie zwei Skalare als Variablen $t_1$ und $t_2$.
+		\large
+		\begin{align*}
+			\color{lightblue}E\color{black}: \,\quad\qquad\vec{x}&=\color{blue}\vec{s}\color{black} + t_1\cdot\color{red}\vec{r}_1\color{black}+ t_2\cdot\color{green}\vec{r}_2\color{black}\\\
+			\color{lightblue}E\color{black}: \quad\Spvek{x_1;x_2;\vdots \,\,;x_n}&=
+\Spvek{\color{blue}s_1;\color{blue}s_2 ;\vdots \,\,;\color{blue}s_n } + 
+			t_1\cdot \Spvek{\color{red}r_{1_1};\color{red}r_{1_2};\vdots \,\,;\color{red}r_{1_n}}+ 
+			t_2\cdot \Spvek{\color{green}r_{2_1};\color{green}r_{2_2};\vdots \,\,;\color{green}r_{2_n}}
+		\end{align*}		
+	}
+
+	Wie stellen wir nun so eine Ebene auf, beziehungsweise welche Informationen brauchen wir um 
+	eine Ebene aufzustellen? 
+
+	Diese Frage können wir uns selbst einfach durch die obige Darstellung beantworten. Nötig ist also wie
+	für die Aufstellung der Gerade ein Punkt welcher auf der Ebene liegt, gerade der Stützvekor 
+	$\color{blue}\vec{s}\color{black} $. Im Unterschied zur Gerade brauchen wir zusätzlich nun jedoch zwei 
+	Richtungen in welche sich die Ebene ausbreitet (statt einer bei der Geraden). Weshalb fordern wir jedoch 
+	die lineare Unabhängigkeit der Vektoren ? (Denke über diese Frage kurz nach).
+
+
+	Antwort: Da sich beide Richtungsvektoren also in gleiche Reichtung ausbreiten, kann sich unsere Ebene nicht in zwei Richtungen ausbreiten. Die verbleibende Richtung spannt damit also lediglich eine Gerade auf.\\
+
+	Genauer: Sollten die Richtungsvektoren linear abhängig sein gilt folgendes \[\label{*1}
+	\color{red}r_1\color{black}= k \cdot \color{green}r_2\color{black} \qquad \text{ für ein festes } 
+	k\in \mathds{R}  \tag{$*$}
+	.\]
+	Daraus folgt nun das unsere Ebenengleichung eine Gerade repräsentiert, denn
+	\begin{align*}
+		\color{lightblue}E\color{black}: \,\quad\qquad\vec{x}&=\color{blue}\vec{s}\color{black} + t_1\cdot\color{red}\vec{r}_1\color{black}+ t_2\cdot\color{green}\vec{r}_2\color{black}\\
+	     &\overset{\eqref{*1}}{=} \color{blue}\vec{s}\color{black} + t_1\cdot \left( k \cdot \color{green}r_2\color{black}  \right) + t_2\cdot\color{green}\vec{r}_2\color{black}\\
+	     &=\color{blue}\vec{s}\color{black} + \left( t_1\cdot k+t_2 \right) \cdot  \color{green}\vec{r_2}
+	     \color{black}  
+	.\end{align*}
+
+	Wir sehen also wir brauchen wirklich diese drei Eigenschaften 
+	\begin{itemize}
+		\item Punkt auf der Geraden
+		\item Erste Ausbreitungsrichtung
+		\item Zweite Ausbreitungrichtung (linear unabhängig zur Ersten)
+	\end{itemize}
+	Damit können wir also aus verschiedenen gegebenen Komponenten eine Ebene konstruieren. Beispielhaft
+	\begin{itemize}
+		\item Gegeben: Zwei (lin. unabh.) Richtungsvektoren $r_1$ und  $r_2$ und einen Startpunkt  $P$.\\\\
+			Damit ist uns die Ebene direkt gegeben. Wir müssen sie lediglich in unsere Gleichung packen 
+			\[
+			E: \quad \vec{x}=\vec{0P} + t_1 \cdot r_1 + t_2 \cdot  r_2
+			.\] \\
+		\item Gegeben: Drei verschiedene Punkte $P_1,P_2,P_3$ welche nicht auf eine Linie liegen (warum?).
+			\\\\
+			Hier gehen wir wie bei der Gerade vor. Wir wählen einen Punkt als Stützvektor und benutzen 
+			die anderen beiden Punkte zum Aufstellen der Richtungsvektoren.\[
+			E:\qquad \vec{x}= \vec{0P_1} + t_1 \cdot  \vec{(P_1-P_2)} + t_2 \cdot \vec{(P_1-P_3)}
+			.\]  
+			\\
+		\item Gegeben: Zwei Geraden $g_1$ und $g_2$ welche sich im Punkt  $S$ schneiden.\\\\
+			Wir können hier die beiden Geraden ganz einfach kombinieren. Sei dafür $r_1$ und 
+			 $r_2$ die Richtungsvektoren der jeweiligen  $g_1$ und  $g_2$. Wir erhalten die Ebene
+			  \[
+			 E:\qquad \vec{x}= \vec{0S}+ t_1\cdot r_1 + t_2 \cdot r_2
+			 .\] 
+		\item Gegeben: Eine Gerade $g$ und ein Richtungsvektor $r_2$, welcher linear unabhängig zu  $g$ ist.
+			\\\\
+			Auch hier ist das Aufstellen relativ simpel: Wir fügen unserer Geradengleichung einfach
+			den zusätzlichen Richtungsvektor hinzu. \[
+				E:\qquad \underbrace{\vec{x}= \vec{s}+t_1 \cdot \vec{r_1}}_{=g} +\, t_2 \cdot 
+				\vec{r_2}
+			.\] 
+	\end{itemize}
+
+	\Aufgabe{(Aufstellen von Ebenen)}{
+		Stelle die Ebene (Parameterform)  aus den gegebenen Parametern auf
+			\begin{enumerate}[(a)]
+				\item Gegeben seien $P_1\left( -1;2;0 \right), P_2\left( 3; -5;3 \right), 
+					P_3\left( 4;0;-1 \right) $
+				\item Gegeben seien die Geraden $g_1$ und  $g_2$ mit 
+					 \begin{align*}
+						 g_1:\quad \vec{x}&=\Spvek{-1;-1;0} + t_1\cdot \Spvek{8;-1;4}\\
+						 g_2:\quad \vec{x}&= \Spvek{-1;-1;0} + t_2\cdot \Spvek{-2;2;3}
+					.\end{align*}
+ 
+				\item Gegeben seien $P_1\left(0 ;0;0 \right), P_2\left( -1; -1;1 \right), 
+					P_3\left( 1;1;1 \right) $
+				\item Gegeben seien die Geraden $g_1$ und  $g_2$ mit 
+					 \begin{align*}
+						 g_1:\quad \vec{x}&=\Spvek{3;-2;1} + t_1\cdot \Spvek{-1;3;2}\\
+						 g_2:\quad \vec{x}&= \Spvek{4;-5;-1} + t_2\cdot \Spvek{1;0;-2}
+					.\end{align*}
+				\item Gegeben seien $P_1\left( 1;0;0 \right), P_2\left( 1; 0;0 \right), 
+					P_3\left( 0;0;1 \right) $
+				\item Gegeben seien $P_1\left( 8;-4;2 \right), P_2\left( -2; 1;5 \right), 
+					P_3\left( 2;-1;10 \right) $
+				\item Gegeben seien die Gerade $g$ und der Richtungsvektor $\vec{r_2}$ mit 
+					\begin{align*}
+						g:\quad \vec{x}&=\Spvek{-2;3;1} + t_1 \cdot \Spvek{1;3;5}\\
+						\vec{r_2} \qquad &= \Spvek{-2;1;-3}
+					.\end{align*}
+				
+			\end{enumerate}
+	}
+	\subsection{Weitere Darstellungsformen}
+	Wir kennen bereits für Geraden verschiedene Darstellungsformen, so zum Beispiel unsere Parameterform und 
+	die klassische Geradengleichung aus der 10. Klasse $y=mx + n$. Auch für Ebenen gibt es solche 
+	Darstellungsformen. Eine bereits uns bekannte Eigenschaft können wir uns hierbei zu nutze machen: \\
+	Wir erhalten für ein Gleichungssystem mit $n$ Variablen und  $m$ Zeilen/Gleichungen 
+	(linear unabhängig voneinander)
+	{\large\[
+		\text{ Ein Objekt der Dimension } \quad n - m
+.\] }
+	Also für eine Ebene brauchen wir 2 Variablen mehr als die Anzahl der Zeilen und für eine Gerade 
+	brauchen wir 1 Variable mehr als die Anzahl der Zeilen. Vergleich dies mit der 
+	klassischen Geradengleichung der 10. Klasse. Ihr könnt so immer überprüfen mit welcher Struktur ihr
+	es in einer Aufgabe zu tun habt indem ihr dies überprüft. Versucht es anhand der bisherigen Gleichungen
+	für Ebenen und Geraden. Als Hinweis ist zu sagen, dass Gleichungen mit Vektoren der Dimension $d$ 
+	als ein Gleichungssystem mit $d$  Gleichungen betrachtet werden sollten 
+	(Siehe Bemerkung Kapitel \ref{BemGerGLS}).\\
 	
+	Wie viel Variablen müssen also in einer einzeiligen Gleichung sein damit wir eine Ebene beschreiben? 
+	\subsubsection{Koordinatenform}
+		Dieser Gedankengang bringt uns zu zu einer weiteren Darstellungsform der Ebene
+		\Definition{Koordinatenform}{
+			Die Koordinatenform eine Ebene ist gegeben durch 4 feste Zahlen $a,b,c,d\in \mathds{R}$ 
+			und die Variablen $x,y,z\in \mathds{R}$ {\LARGE\[
+			E: \quad ax + by + cz = d
+	.\] }\vspace*{0.1cm}
+		}
+		\Beispiel{
+			\[
+			E_1:\quad -2x + 3y - 4z = 10 
+			.\] 
+			\[
+			E_2: \quad x - 2y + 0\cdot z = 0 
+			.\]
+			\[
+			E_3 : x - 2y = 0
+			.\] 
+
+		}
+		Wir sehen hier also eine Gleichung mit 3 Variablen. Also hat unser Objekt die Dimension 
+		$3-1=2:\quad$Eine Ebene.\\
+		\Bemerkung{
+		Der aufmerksame Leser erkennt, dass $E_2$ und  $E_3$ identisch sind, auch wenn das Vorkommen
+		vom  $z$ in  $E_3$ nicht gleich ersichtlich ist. Die Variablen $x,y,z$ stehen hier gerade
+		für die Punktkoordinaten im 3-Dimensionalen Raum. Dies führt dazu, dass es für Geraden im
+		3-dimensionalen Raum keine solche Darstellung gibt (In 2-D funktioniert dies aber: Warum?)!  
+		}
+		Diese Darstellungsform kommt nun mit einem großen Vorteil: Wir können sehr einfach überprüfen ob ein 
+		Punkt auf dieser Ebene liegt. Dies funktioniert genauso wie wenn wir wissen wollen ob ein Punkt auf 
+		einer Gerade der Form $y=mx+n$ liegt. Wir setzen hier lediglich die  $x$-Koordinate und 
+		$y$-Koordinate des Punktes für jeweils  $x$ bzw.  $y$ in unserer Gleichung ein. Falls wir hierbei 
+		eine Wahre Aussage (z.B. $3=3$) erhalten liegt der Punkt auf unserer Geraden. Falls nicht, liegt 
+		dieser Punkt nicht auf der Geraden.\\
+		Für unsere neue Darstellungsform, der Koordinatenform, können wir nun ebenso vorgehen. Wir setzen 
+		 die $x,y,z$-Koordinaten des Punktes  $P$ für  $x,y,z$ in unserer Gleichung ein.
+		Auch hier liegt der Punkt auf der Ebene falls wir eine wahre Aussage erhalten.
+
+
+		Wie sollen wir jedoch diese Gleichung interpretieren? Zum Vergleich hierzu steht unsere 
+		Parameterform der Ebene gerade für die beiden Ausbreitungsrichtungen der Ebene und eine Verschiebung
+		um den Stützvektor. \\
+		Um diese Frage zu beantworten betrachten wir für den Anfang Ebenen mit $d:=0$. Ein schnelles
+		Nachrechnen ergibt, dass der Punkt $\mathbf{0}\left( 0;0;0 \right) $ auf unserer Ebene liegt.
+		Wir erhalten die Gleichung  \[
+		0=ax + by + cz= \Spvek{a;b;c}\circ \Spvek{x;y;z} 
+		.\] 
+		Wobei $\circ$ für das Skalarprodukt steht. Wir erkennen, dass ein Punkt auf der Ebene 
+		liegt, falls er rechtwinklig zu diesem Vektor  $\vec{n}:= {\tiny\Spvek{a;b;c}}$ steht. 
+		Wir nennen dies den \textbf{Normalenvektor} $\vec{n}$ der Ebene und dieser steht gerade 
+		senkrecht auf ihr. Wir können uns das wie einen Fahnenmast (entspricht $\vec{n}$) auf einem großen 
+		Platz (entspricht $E$)  vorstellen: 
+		Egal von welcher Seite ich das Geodreieck zwischen Mast und Platz ansetze, wir erhalten immer 
+		$90^{\circ}$. Eine Skizze dazu:
+		\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick},scale=1.4]
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = green!70!black] {2*x + y};
+						\draw (0,0,0) -- (-8,0,0);
+						\draw (0,0,0) -- (0,0,20);
+						\draw (0,0,0) -- (0,-8,0);
+
+					\draw[vector] (0,0,0) -- (-4,4.5,-2);
+
+					\end{axis}
+					
+			\end{tikzpicture}
+	\end{center}
+	
+	Was gilt nun jedoch für $d\neq 0$? Hier wird die Ebene offensichtilich verschoben, denn das einsetzen des 
+	Koordinatenursprungs $\vec{0}$ ergibt eine falsche Aussage. Aber wohin wird die Ebene nun verschoben?
+	Ein Hinweis auf die Verschiebung gibt sicherlich unserer geänderter Parameter $d$ und unser neu entdeckter
+	Normalenvektor. Wir werden sehen, dass diese Idee die Richtige ist und wir die Ebene in Richtung des
+	Normalenvektors um den Faktor $d$ verschieben. Genauer gilt \[
+	d\cdot \frac{\vec{n}}{|\vec{n}\,|^{2}} \in E
+	.\] 
+	Wir müssen den Normalenvektor um den Faktor $\frac{d}{|\vec{n}\,|^{2}}$ strecken um zur Ebene zu gelangen. 
+	Ein kurzes Nachrechnen durch einsetzen des Vektors $d\cdot \frac{\vec{n}}{|\vec{n}\,|^{2}} $ bestätigt dies 
+	\begin{align*}
+		E: \quad ax+by+cz & = d\\
+		a\cdot \frac{d\cdot a}{|\vec{n}\,|^{2}} + b \cdot  \frac{d\cdot b}{|\vec{n}\,|^{2}} +
+		c \cdot  \frac{d\cdot c}{|\vec{n}\,|^{2}} &= d\\
+		d\left( \frac{a^2+b^{2}+c^{2}}{|\vec{n}\,|^{2}} \right) &=d \\
+		d \left( \frac{|\vec{n}\,|^{2}}{|\vec{n}\,|^{2}} \right)&=d\\
+		d&=d
+	.\end{align*}
+
+	Wenn nun noch zusätzlich $\vec{n}$ normalisiert (Siehe \ref{betrag}) ist vereinfacht sich unsere Formel 
+	erheblich. Nun wird die Ebene gerade um  $d\cdot \vec{n}$ verschoben.
+	Das können wir auch immer erreichen. Zur Errinnerung: Wir haben es hier mit einfachen Gleichung zu tun,
+	können also Äquivalenzumformungen vornehmen um die Gleichung an sich zu ändern, ohne das sich die von ihr 
+	repräsentierte Ebene ändert. Wir teilen also die gesammte Gleichung einfach durch die Länge des Vektors
+	$\vec{n}$. 
+	\begin{align*}
+		ax+by+cz &= d \qquad \mid : \sqrt{a^{2} + b^{2}+c^{2}} \\
+		\frac{a}{\sqrt{a^{2}+ b^{2}+ c^{2}} }\cdot x + \frac{b}{\sqrt{a^{2}+ b^{2}+c^{2}} }\cdot y
+		+ \frac{c}{\sqrt{a^{2}+b^{2}+c^{2}} }\cdot z &= \frac{d}{\sqrt{a^{2}+ b^{2}+c^{2}} }
+	.\end{align*}
+	Diese Ebenengleichung nennen wir nun \textbf{normalisiert}.\\
+
+
+
+
+	Wie stellt man nun aber solch eine Ebene auf? Am einfachsten ist es dabei immer über eine Methode zu gehen: 
+	über \textbf{3 gegebene Punkte} $P_1 ,P_2 ,P_3 $. Denn aus allen möglichen Informationen um eine Ebene
+	aufzustellen können wir immer 3 solcher Punkte extrahieren. 
+	\Bemerkung{
+		Falls uns andere Informationen wie zum Beispiel
+	zwei sich schneidende Geraden gegeben sind berechnen wir einfach 3 Punkte welche auf den Geraden liegen 
+	und spannen damit die Ebene auf. Dabei dürfen jedoch nicht alle drei Punkte gleichzeitig auf 
+	nur einer der Geraden liegen.
+	}
+	Zurück zur Berechnung: Wir bilden wie bei der Parameterform die beiden Richtungsvektoren $\vec{P_1P_2}$ und $\vec{P_1P_3}$ und 
+	berechnen mit diesen den Normalenvektor, also gerade $a,b$ und  $c$, über das Kreuzprodukt  \[
+		\vec{n}= \Spvek{a;b;c}= \vec{P_1P_2} \times \vec{P_1P_3}	
+	.\] 
+	Nun fehlt lediglich die letzte Komponente, eben $d$. Dies erhalten wir indem wir einen der Punkte, zum 
+	Beispiel  $P_1\left( x_1,y_1,z_1 \right) $, in unsere Gleichung einsetzen.
+	\[
+	d := a\cdot x_1 + b\cdot y_1 + c\cdot z_1
+	.\]
+	\Beispiel{
+		Seien $P_1\left( 1;2;0 \right),P_2\left( -2;1;3 \right), P_3\left( 0;1;-1 \right)   $ gegeben.\\
+
+		Wir berechnen zuerst $a,b,c$ mit  \[
+		\Spvek{a;b;c}= \vec{P_1P_2}\times \vec{P_1P_3}= \Spvek{-3;-1;3} \times \Spvek{-1;-1;-1} = 
+		\Spvek{1 + 3;-3 - 3 ; 3 - 1  } = \Spvek{4;-6;2}
+		.\] 
+		Einsetzen von $P_1$ in unsere Gleichung ergibt
+		 \[
+		d:= 4\cdot 1 - 6\cdot 2 + 2\cdot 0 = 4-12 = -8
+		.\] 
+		Wir erhalten also unsere Ebene 
+		\[
+		E: \qquad 4x - 6y + 2z = -8
+		.\] 
+	}
+	\Aufgabe{(Ebene in Koordinatenform Aufstellen)}{
+		Stelle die Ebenen (Koordinatenform) aus den gegebenen Parametern auf.
+			\begin{enumerate}[(a)]
+				\item Gegeben seien $P_1\left( 0;-2;6 \right), P_2\left( -1; 5;2 \right), 
+					P_3\left( 1;3;-1 \right) $
+				\item Gegeben seien die Geraden $g_1$ und  $g_2$ mit 
+					 \begin{align*}
+						 g_1:\quad \vec{x}&=\Spvek{0;5;0} + t_1\cdot \Spvek{-1;-2;-1}\\
+						 g_2:\quad \vec{x}&= \Spvek{0;5;0} + t_2\cdot \Spvek{5;3;-2}
+					.\end{align*}
+ 
+				\item Gegeben seien $P_1\left(1 ;2;5 \right), P_2\left( 4; 0;0 \right), 
+					P_3\left( 2;-5;-1 \right) $
+				\item Gegeben seien die Geraden $g_1$ und  $g_2$ mit 
+					 \begin{align*}
+						 g_1:\quad \vec{x}&=\Spvek{3;-2;1} + t_1\cdot \Spvek{-1;3;2}\\
+						 g_2:\quad \vec{x}&= \Spvek{4;-5;-1} + t_2\cdot \Spvek{1;0;-2}
+					.\end{align*}
+				\item Gegeben seien $P_1\left( -1;0;0 \right), P_2\left(- 1; 0;0 \right), 
+					P_3\left( 0;0;-1 \right) $
+				\item Gegeben seien $P_1\left( 0;0;2 \right), P_2\left( -5; 2;-2 \right), 
+					P_3\left( -3;-7;1 \right) $
+				\item Gegeben seien die Gerade $g$ und der Richtungsvektor $\vec{r_2}$ mit 
+					\begin{align*}
+						g:\quad \vec{x}&=\Spvek{0;-1;2} + t_1 \cdot \Spvek{0;-1;1}\\
+						\vec{r_2} \qquad &= \Spvek{0;0;-1}
+					.\end{align*}
+				
+			\end{enumerate}
+	}
+
+	\subsubsection{Hessische Normalform}
+	Wie wir bereits sehen konnten ist der Normalenvektor ein sehr eleganter Weg eine Ebene zu beschreiben. 
+	Neben der Parameterform gibt es hier also noch eine weitere Ebenenform die diesen Weg nutzt.\\
+	Die Idee dahinter wurde bereits in der Erklärung zur Koordinatenform angeschnitten für $d=0$:
+	Für Vektoren, welche wir in diese Ebene legen können (welche also parallel zu ihr sind) gilt, 
+	dass sie senkrecht zum Normalenvektor  $\vec{n}$ 
+	stehen. Desshalb für einen solchen Vektor gilt $\vec{v}\circ \vec{n}=0$. Über diese Eigenschaft können wir 
+	nun die Ebene vollständig Charakterisieren. Einen Zwischenschritt müssen wir aber noch einlegen, denn wir
+	wollen wissen ob ein Punkt/Vektor auf der Ebene liegt und nicht ob er parallel zu ihr ist. Wir können die 
+	beiden Probleme einfach ineinander umformulieren, indem wir einen Punkt $P$ auf der Ebene fixieren. 
+	\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick},scale=1.8]
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.1},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+					\draw[vector, blue] (0,0,0) -- (0,0,7);
+					\draw[vector, green] (0,0,0) -- (5,0,2);
+					\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = white!60!black] {-x  -y+ 6};
+
+					\draw (3,-1,-1) node {\tiny$\color{green}\vec{v}$};
+					\draw (-1,-1,5) node {\tiny$\color{blue}\vec{0P}$};
+					\draw (2,5,1) node {\tiny$\color{lightblue}\vec{v} -\vec{0P}$};
+					\draw (0.25,0.25,8.75) arc [start angle=80,end angle=10,x radius=1.5,y 
+						radius=2.4]		;
+
+					\draw[vector, lightblue] (0,0,7) -- (5,0,2);
+					\draw[vector] (0,0,7) -- (1,1,14);
+					\draw (0.27,0,12) node {\tiny$\color{red}\vec{n} $};
+					\draw (0.6,0,7.8) node {$\cdot $};
+									\end{axis}
+					
+			\end{tikzpicture}
+	\end{center}
+	Man erkennt schnell, dass ein Punkt $\color{green}R\color{black}$ in der Ebene liegt 
+	genau dann wenn der Vektor $\color{lightblue}\vec{PR}\color{black}$ parallel
+	zur Ebene ist. Das ist genau dann der Fall, falls $\color{lightblue}\vec{PR}\color{black}$ senkrecht zu 
+	$\color{red}\vec{n}\color{black}$ ist.
+	\Definition{(Normalform)}{
+		Sei $\color{blue}P\color{black}$ ein Punkt auf der Ebene und 
+		$\color{red}\vec{n}\color{black}$ ihr zugehöriger Normalenvektor. 
+		Wir setzen $\color{blue}\vec{s}:= \vec{0P}\color{black}$. Die \textbf{Normalform} ist dann 
+	{	\large \[
+			E:\quad \color{red}\vec{n}\color{black}\, \circ \left( \color{green}\vec{x}\color{black}- \color{blue}\vec{s}\color{black} \right) =0
+	.\]} 
+		Wir nennen diese Form \textbf{Hessesche Normalform} falls $\color{red}\vec{n}\color{black}$
+		normalisiert ist. Also $|\color{red}\vec{n}\color{black}\,|=1$ gilt.
+	}
+	Da diese Form so eng mit der Koordinatenform verwand ist können wir hier genauso vorgehen um
+	unseren Vektor {\tiny$\color{red}\vec{n}\color{black}=\Spvek{a;b;c}$ } zu berechnen. Im Anschluss
+	wählen wir noch einen beliebigen Punkt auf der Ebene für $\color{blue}P\color{black}$ und sind damit fertig.
+	\Aufgabe{(Ebene in Hessescher Normalform aufstellen)}{
+		Stelle die Ebenen (Hessesche Normalform) aus den gegebenen Parametern auf.
+			\begin{enumerate}[(a)]
+				\item Gegeben seien $P_1\left( -2;1;-1 \right), P_2\left( -2; -6;-1 \right), 
+					P_3\left( 0;0;0 \right) $
+				\item Gegeben seien die Geraden $g_1$ und  $g_2$ mit 
+					 \begin{align*}
+						 g_1:\quad \vec{x}&=\Spvek{-3;1;2} + t_1\cdot \Spvek{0;-2;3}\\
+						 g_2:\quad \vec{x}&= \Spvek{-3;1;2} + t_2\cdot \Spvek{2;3;-4}
+					.\end{align*}
+ 
+				\item Gegeben seien $P_1\left(0 ;-1;2 \right), P_2\left( -1; -1;1 \right), 
+					P_3\left( 1;1;1 \right) $
+				\item Gegeben seien die Geraden $g_1$ und  $g_2$ mit 
+					 \begin{align*}
+						 g_1:\quad \vec{x}&=\Spvek{3;-2;1} + t_1\cdot \Spvek{-1;3;2}\\
+						 g_2:\quad \vec{x}&= \Spvek{4;-5;-1} + t_2\cdot \Spvek{1;0;-2}
+					.\end{align*}
+				\item Gegeben seien $P_1\left( 0;-1;-1 \right), P_2\left( -1; -1;0 \right), 
+					P_3\left( 1;0;1 \right) $
+				\item Gegeben seien $P_1\left( -6;2;0 \right), P_2\left( 2; -3;5 \right), 
+					P_3\left( 2;1;5 \right) $
+				\item Gegeben seien die Gerade $g$ und der Richtungsvektor $\vec{r_2}$ mit 
+					\begin{align*}
+						g:\quad \vec{x}&=\Spvek{4;0;0} + t_1 \cdot \Spvek{3;3;-5}\\
+						\vec{r_2} \qquad &= \Spvek{4;0;0}
+					.\end{align*}
+				
+			\end{enumerate}
+	}
+	\subsection{Umformen der Ebenendarstellungen}
+	Wir haben bereits gesehen wie wir die verschiedenen Ebenenformen aus gegebenen Parametern aufstellen. 
+	Doch wie wandeln wir sie ineinander um?
+	\subsubsection{Parameterform $ \rightarrow$ Koordinatenform}
+	Eine Methode die ich hier erwähnen möchte, jedoch nicht empfehlenswert für die Praxis ist ist jene das 
+	Gleichungssystem der Parameterform zu einer Gleichung zu vereinfachen. Das Gleichungssystem einer
+	Parameterform besteht dabei aus 3 Zeilen 
+	\begin{align*}
+		E:\quad \vec{x}&= \vec{s} + t_1 \cdot \vec{r_1} + t_2 \cdot \vec{r_2}\\
+			       &\downarrow\\
+		I\,\,: \quad	x & = s_1 + t_1 \cdot r_{1_1} + t_2 \cdot r_{2_1}\\
+		II\,: \quad	y & = s_2 + t_1 \cdot r_{1_2} + t_2 \cdot r_{2_2}\\
+		III: \quad	z & = s_3 + t_1 \cdot r_{1_3} + t_2 \cdot r_{2_3}\\
+	.\end{align*}
+	Wir können nun eine der Gleichungen nach $t_1$ umstellen und dann per Einsetzungsverfahren in eine
+	der anderen Gleichungen einsetzen. Die resultierend können wir nun wiederum nach  $t_2$ umstellen und in
+	die letzte verbleibende Gleichung einsetzen. Damit haben wir $t_1$ und  $t_2$ eliminiert und so sind 
+	lediglich  $x,y$ und  $z$ als Variablen in einer einzeiligen Gleichung übrig. \\
+	Da diese Methode jedoch relativ viel Zeit in Anspruch nimmt würde ich sie im Allgemeinen nicht empfehlen.
+	Jedoch gibt es Spezialfälle wo diese Methode besser ist als die Folgende.\\\\
+
+
+	Eine einfachere Möglichkeit besteht darin einfach den Normalenvektor  $\vec{n}$ über unsere beiden 
+	Richtungsvektoren $\vec{r_1}$ und  $\vec{r_2}$ zu berechnen. Wir benutzen hierbei wieder das 
+	Kreuzprodukt und erhalten so
+	\[
+	\Spvek{a;b;c}= \vec{r_1}\times \vec{r_2}
+	.\] 
+	Durch Einsetzen des Stützvektors in unsere Gleichung können wir nun unsere letzte Komponente $d$ berechnen. 
+	 \[
+	d:= a\cdot s_1 + b\cdot s_2 + c\cdot s_3
+	.\] 
+	Damit haben wir alle Komponenten berechnet und können gegebenenfalls die Gleichung noch normalisieren.
+
+	\subsubsection{Parameterform $\rightarrow$ Hessesche Normalform}
+	Hier können wir ebenso vorgehen wie bei der vorherigen Umwandlung. Für \\$E:\; \vec{x}= \vec{s}+ 
+	t_1 \cdot \vec{r_1} + t_2 \cdot  \vec{r_2}$ rechnen wir
+	\[
+	\vec{n}= \vec{r_1} \times \vec{r_2}
+	.\] 
+	Und normalisieren diesen im Anschluss \[
+	\vec{n_0} = \frac{\vec{n}}{|\vec{n}\,|}
+	.\] 
+	Jetzt brauchen wir noch einen Punkt auf der Ebene, beziehungsweise einen entsprechenden Stützvektor. 
+	Wir machen uns hier wieder das Leben einfach und wählen dafür einfach $\vec{s}$. Wir erhalten die
+	Hessesche Normalform
+	\[
+	E:\quad \vec{n_0}\circ \left( \vec{x} - \vec{s} \,\right) = 0
+	.\] 
+	\subsubsection{Koordinatenform $\rightarrow$ Parameterform}
+	Auch hier gibt es wieder mehrere Möglichkeiten, wobei ich wieder eine davon lediglich anschneiden werde. 
+	Bei dieser Methode kann man versuchen zwei Vektoren $\vec{r_1}$ und  $\vec{r_2}$ zu finden 
+	welche rechtwinklig zu {\tiny$\vec{n}=\Spvek{a;b;c}$ } stehen. Also
+	\[
+	\vec{n}\circ \vec{r_1} = \vec{n}\circ \vec{r_2} = 0
+	.\] 
+	Eine einfache Methode dafür ist es eine Komponente von $\vec{r_1}$ gleich  $0$	
+	zu wählen was die Suche erheblich vereinfacht. $\vec{r_2}$ berechnen wir dann über das Kreuzprodukt zwischen 
+	$\vec{r_1}$ und $\vec{n}$.  
+	Schlussendlich suchen wir nun noch einen Stützvektor indem wir eine Lösung für $x,y,z$ in unserer Gleichung
+	finden. Diese lösung ist dann unser Stützvektor  $\vec{s}$.\\\\
+
+
+	Die simplere Methode besteht daraus einfach 3 Punkte auf unserer Ebene zu wählen und im Anschluss
+	unsere Standartkonstruktion anzuwenden (3 Punkte $\rightarrow$  Parameterform). 
+	Wie bereits erwähnt ist es sinnvoll hierbei einen Komponenten der Punkte gleich $0$ zu wählen und den anderen
+	gleich $1$. Also seien $P_1\left( 0,0,p_z \right), P_2\left( p_x,0,0 \right), P_3\left( 0,p_y,0 \right)   $. 
+	Wir lösen dann die drei \textbf{einzelnen} linearen Gleichungen 
+	\begin{align*}
+		d &= a\cdot 0 + b\cdot 0 + c\cdot p_z\quad =  c\cdot p_z\\
+		d&= a\cdot p_x + b\cdot 0 + c\cdot 0 \quad= a\cdot p_x\\
+		d&= a\cdot 0 + b\cdot p_y + c\cdot 0 \quad =  b\cdot p_y
+	.\end{align*}
+	Es ist hierbei möglich, dass wir für maximal zwei dieser Gleichungen keine Lösung finden können.
+	Wir setzen dann einfach ausgehend von dem/den Punkt(en) für welche(n) eine Lösung gefunden wurde Variablen 
+	in die eigentlich $0$ gewählten Komponenten. Als Beispiel haben wir also eine Lösung für  
+	$P_1\left( 0,0,p_z \right) $ wir setzen nun $P_2\left( 0,p_y,p_z \right) $ und $P_3\left( p_x,0,p_z \right) $
+	und lösen im Anschluss die Gleichungssysteme für die beiden Punkte.
+	Aus den daraus resultierenden Punkten können wir nun die Parameterform der Ebene konstruieren.
+	\subsubsection{Koordinatenform $\rightarrow$ Hessesche Normalform}
+	Diese Umwandlung ist relativ einfach, da uns bereits der Normalenvektor gegeben ist. Wir müssen diesen
+	nun lediglich normalisieren \[
+	\vec{n_0} = \frac{\vec{n}}{|\vec{n}\,|}
+	.\] 
+	Und einen Stützvektor {\tiny$\vec{s}=\Spvek{x;y;z}$ } finden welcher die Gleichung der Koordinatenform 
+	erfüllt.
+	Hierbei ist es wieder sinnvoll zwei Komponenten bereits zu setzen und dann das entsprechende lineare 
+	Gleichungssystem zu lösen. Setze $x:=y:=0$, dann
+	 \[
+	d= ax+by+cz = c\cdot z
+	.\] 
+	Auch hier sei erwähnt, dass es möglich ist das wir hierbei keine Lösung für die Gleichung finden können.
+	Wir wählen dann entsprechend \textbf{andere} Komponenten von $\vec{s}$ gleich $0$.\\
+	Damit erhalten wir also {\tiny$\vec{s}= \Spvek{0;0;z}$ } und stellen die Hessesche Normalform auf
+	\[
+	E:\quad \vec{n_0} \circ\left(\vec{x}- \vec{s}\,  \right) = 0
+	.\] 
+
+	\subsubsection{Hessesche Normalform $\rightarrow$ Parameterform}
+	Hierbei gehen wir wieder ganz ähnlich vor wie bei der Umwandlung von Koordinatenform zur Parameterform.
+	Dabei ist uns der Stützvektor $\vec{s}$ bereits gegeben und wir müssen lediglich die beiden Richtungsvektoren
+	$\vec{r_1}$ und  $\vec{r_2}$ berechnen. Wie wählen dabei, wie oben bereits angeschnitten, wählen wir eine
+	Koordinate
+	von $\vec{r_1}$ gleich $0$ {\tiny $r_1 = 
+	\Spvek{0;y;z}$}. Auch gilt, falls unsere Gleichung so keine Lösung hat müssen wir eine andere Koordinate 
+	gleich $0$ wählen. Wir lösen also \[
+	0=\vec{n_0}\circ \vec{r_1} = \vec{n_0} \circ \Spvek{0;y;z}
+	.\] 
+	Damit erhalten wir $\vec{r_1}$ rechtwinklig zu $\vec{n_0}$. Mittels des Kreuzprodukts rechnen wir nun
+	$\vec{r_2}$ aus 
+	\[
+	\vec{r_2}:= \vec{r_1} \times \vec{n_0}
+	.\] 
+	Dieser steht damit senkrecht zu $\vec{r_1}$ \textbf{und} $\vec{n_0}$. \\
+	Wir haben nun also alle Komponenten unserer Parameterform zusammen und stellen diese auf \[
+	E:\quad \vec{x}= \vec{s} + t_1 \cdot \vec{r_1} + t_2 + \vec{r_2}
+	.\] 
+
+	\subsubsection{Hessesche Normalform $\rightarrow$ Koordinatenform}
+	Diese letzte Umformung ist ist, aufgrund der Ähnlichkeit von Normalform und Koordinatenform, wieder relativ 
+	simpel. Durch den Normalenvektor $\vec{n_0}$ sind uns bereits die Parameter $a,b$ und  $c$ 
+	der Koordinatenform gegeben. Es bleibt also den Parameter $d$ zu finden mithilfe eines Punktes auf der Ebene.
+	Wir wählen dafür den Stützvektor $\vec{s}= \vec{0P}$ der Hesseschen Normalform und setzen ein	\[
+	d= a\cdot s_1 + b\cdot s_2 + c\cdot s_3 
+	.\] 
+	Schlussendlich haben wir damit alle Parameter der Koordinatenform berechnet und stellen dies auf
+	\[
+	E:\quad ax+by+cz = d
+	.\] 
+	\Aufgabe{(Umformen von Ebenen)}{
+		Forme die gegebene Ebenengleichung in die übrigen oben behandelten Darstellungsformen um.
+		\begin{enumerate}[(a)]
+			\item \[
+			E:\qquad -2x + y - z = 0
+			.\] 
+			\item \[
+			E:\qquad \vec{x} = \Spvek{3;-1;2} + t_1 \cdot \Spvek{2;-1;0} + t_2 \cdot \Spvek{-1;0;-3}
+			.\] 
+			\item  \[
+			E:\qquad 3x - 6y + 5z = 9
+			.\] 
+
+			\item \[
+			E:\qquad \Spvek{-1;0;0} \circ \left( \vec{x} - \Spvek{3;5;-6} \right) = 0
+			.\] 
+			\item \[
+			E:\qquad \vec{x} = \Spvek{-5;5;1} + t_1 \cdot \Spvek{8;2;-1} + t_2 \cdot \Spvek{0;-2;4}
+			.\] 
+
+			\item \[
+			E:\qquad \vec{x} = t_1 \cdot \Spvek{1;1;1} + t_2 \cdot \Spvek{-1;-1;3}
+			.\] 
+
+			\item  \[
+			E:\qquad   2y - 4z = 7
+			.\] 
+
+			\item \[
+			E:\qquad \Spvek{0.8;0;-0.6} \circ \left( \vec{x} - \Spvek{2;-1;1} \right) = 0
+			.\] 
+
+			\item \[
+			E:\qquad \vec{x} = \Spvek{0;2;-1} + t_1 \cdot \Spvek{5;1;7} + t_2 \cdot \Spvek{-3;2;0}
+			.\] 
+
+		\end{enumerate}
+	}
+	\newpage
+	\subsection{Arbeiten mit Ebenen}
+	Selbstverständlich haben wir das Konzept der Ebene nicht einfach so eingeführt, sondern um damit geometrische
+	Sachverhalte zu analysieren. 
+	\subsubsection{Lagebeziehung Punkt - Ebene}\label{LZPE}
+	Für die Lagebeziehung zwischen einem Punkt $P\left( P_x,P_y,P_z \right) $ und einer Ebene $E$ gibt es nur 
+	zwei mögliche Resultate.
+	Entweder liegt der Punkt \textbf{auf} der Ebene, oder \textbf{nicht}. Wir können hierbei 
+	für die Verschiedenen Darstellungsformen der Ebene folgender Maßen vorgehen.
+	\begin{table}[htpb]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline&\textbf{Parameterform} & \textbf{Koordinatenform} & \textbf{Hessesche NF} \\
+			$E:$& $\vec{x}= \vec{s}+ t_1 \cdot \vec{r_1} + t_2 \cdot \vec{r_2}$&
+			$ax+by+cz=d$ & $\vec{n_0} \circ \left( \vec{x} - \vec{s} \right) = 0 $\\\hline
+			Vorgehen  & Gleichungssystem lösen & Einsetzen & Einsetzen\\ \hline
+			& $\vec{0P}=\vec{s} + t_1 \cdot \vec{r_1} + t_2\cdot \vec{r_2}$
+			& $aP_x + b P_y + c P_z = d$& $\vec{n_0} \circ \left( 
+					 \vec{0P} - \vec{s}\right)=0 $ \\ \hline
+			$P$ liegt auf $E$ & \textbf{Lösung} &\textbf{Wahre Aussage} & \textbf{Wahre Aussage}\\\hline
+			$P$ nicht auf  $E$ & \textbf{keine Lösung} & \textbf{Falsche Aussage} & 
+			\textbf{falsche Aussage}\\ \hline
+		\end{tabular}
+	\end{table}
+
+	Falls ein Punkt nun nicht auf unserer Ebene liegt ist es manchmal notwendig seinen Abstand zu ihr zu 
+	bestimmen. Wie wir bereits bei dem Abstand zwischen Punkt und Gerade gesehen haben ist die kürzeste Gerade
+	gerade die Linie zwischen dem Punkt und der Ebene welcher orthogonal (rechtwinklig) zur Ebene verläuft.
+	\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick},scale=1.4]
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = green!70!white] {2*x + y};
+						\draw (0,0,0) -- (-8,0,0);
+						\draw (0,0,0) -- (0,0,20);
+						\draw (0,0,0) -- (0,-8,0);
+
+					\draw[vector] (-1.6,-2.1,-1) -- (-4,-3,9);
+					\draw (-1,-2,6) node[red] {$d\cdot \vec{n_0}$};
+					\draw (-4,-3,9) node {$\times $};
+					\draw (-5,-4,11) node {$P$};
+					\end{axis}
+					
+			\end{tikzpicture}
+	\end{center}
+	Unser bereits eingeführter Normalenvektor $\vec{n}$ besitzt gerade 
+	die gewünschte Eigenschaft rechtwinklig zur Ebene zu
+	verlaufen. Falls wir nun diesen Normalenvektor normalisieren $\vec{n_0}$, deshalb auf eine Länge von
+	$1$ stauchen bzw. strecken, hat $P$ geraden den Abstand zur Ebene um welchen Faktor wir
+	$\vec{n_0}$ verlängern müssen um von $E$ zu  $P$ zu kommen (oder umgekehrt).
+	Wir stellen desshalb folgende Gerade auf \[
+	g_P: \quad \vec{x} = \vec{0P} + t\cdot \vec{n_0} 
+	.\] 
+	Jetzt führen wir eine Lagebeziehung zwischen dieser Gerade und der Ebene durch und erhalten, 
+	da diese Gerade $E$ sicher schneidet, die Lösungsmenge  $\mathds{L}=\{d\,\}$ für $g_P$. 
+	Dies ist dann der Abstand, da wir  $d$ weit von  $P$ aus rechtwinklig zur Ebene laufen müssen um
+ 	selbige zu erreichen.
+	\Aufgabe{(Lagebeziehung Ebene - Punkt)}{
+		Analysiere die Lagebeziehung zwischen Punkt und Ebene. Gib gegebenenfalls den Abstand an.
+		\begin{enumerate}[(a)]
+			\item $P\left( 3;-2;1.5 \right) $\[
+			E:\qquad -x + 2y - 3z = 0
+			.\] 
+			\item $P\left( -2;-3;1 \right) $\[
+			E:\qquad \vec{x} = \Spvek{2;-1;0} + t_1 \cdot \Spvek{3;1;2} + t_2 \cdot \Spvek{-2;0;-5}
+			.\] 
+			\item  $P\left(2;3;-6  \right) $\[
+			E:\qquad 3x - 5y  = -9
+			.\] 
+
+			\item $P\left( -1;5;-2 \right) $\[
+			E:\qquad \Spvek{0;1;0} \circ \left( \vec{x} - \Spvek{3;5;-6} \right) = 0
+			.\] 
+			\item $P\left(-3;-8; 12 \right) $\[
+			E:\qquad \vec{x} = \Spvek{-5;5;1} + t_1 \cdot \Spvek{8;2;-1} + t_2 \cdot \Spvek{0;-2;4}
+			.\] 
+
+			\item $P\left( 0;0;8 \right) $\[
+			E:\qquad \vec{x} = t_1 \cdot \Spvek{1;1;1} + t_2 \cdot \Spvek{-1;-1;3}
+			.\] 
+
+			\item  $P\left( 2;-1;7 \right) $\[
+			E:\qquad   2x + y - 8z = 7
+			.\] 
+
+			\item $P\left(5;-6;-1  \right) $\[
+			E:\qquad \Spvek{0;0.6;-0.8} \circ \left( \vec{x} - \Spvek{0;-2;5} \right) = 0
+			.\] 
+
+			\item $P\left( -24;1;2  \right) $\[
+			E:\qquad   -x + 3y - 12z = 0
+			.\] 
+
+		\end{enumerate}
+	}
+	\newpage
+
+	\subsubsection{Lagebeziehung Gerade - Ebene}
+	Die Lagebeziehung zwischen einer Gerade $g:\; \vec{x}= \vec{z} + k \cdot \vec{w}$ 
+	und einer Ebene $E$ 
+	hat nun 3 mögliche Fälle. Um diese Fälle aufzulösen betrachten wir den Normalenvektor $\vec{n}$
+	der Ebene und den Richtungsvektor $\vec{w}$ der Gerade. Je nach Lage dieser beiden Vektoren zueinander 
+	lösen wir im Anschluss  wieder ein Gleichungssystem bestehend aus der Ebene und der 
+	Gerade.	Die verschiedenen Resultate und der Zusammenhang zu den Lösungsmengen des oben beschriebenen 
+	Gleichungssystems und die Lage von $\vec{n}$ und $\vec{w}$ zueinander 
+	sind in folgender Übersicht dargestellt. Sei dafür $\vec{n}$ der Normalenvektor der Ebene.
+	 \begin{itemize}
+		 \item Die Gerade \textbf{durchstößt} die Ebene. Den Punkt $S$ an welchem die Ebene durchstößt nennen
+			wir Durchstoßpunkt.
+		\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick}]
+					
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\draw[red,line width=2pt] (-1,-1,-1) -- (5,6,-14);
+
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = black!50!white] {x + y};
+					\draw (0,0,0) -- (-8,0,0);
+					\draw[red,line width=2pt] (-7,-8,12) -- (-1,-1,-1);
+					\draw (-10,-1,8) node[red] {$g$};
+					\draw (-1,-1,-1) node {$\times $};
+					\draw (-2,-2,-2) node {$S $};
+					\draw (0,0,0) -- (0,0,15);
+										\draw (0,0,0) -- (0,-8,0);
+					\end{axis}
+					
+			\end{tikzpicture}\\
+			$\vec{w}$ steht nicht rechtwinklig zu $\vec{n}$, deshalb \[
+			\vec{w} \circ \vec{n} \neq 0
+			.\] 
+			Das Gliechungssytem hat dann \textbf{genau eine} Lösung.
+	\end{center}
+
+\item 		Die Gerade liegt \textbf{parallel} zur Ebene mit Abstand $\color{blue}d\color{black}$ von ihr.
+			\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick}]
+					
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = black!50!white] {x + y};
+					\draw (0,0,0) -- (-8,0,0);
+					\draw (-9,-2,-6) node[red] {$g$};
+					\draw (0,0,0) -- (0,0,15);
+					\draw (0,0,0) -- (0,-8,0);
+					\draw[blue] (7,7/8,6) -- (7,7/8,4.2);
+					\draw (8,1.1,4) node[blue] {\tiny$d$}; 
+					\draw (-9,-1,-10) node[blue] {\tiny$d$}; 
+					\draw[blue] (-8,-1,-7) -- (-8,-1,-9.2);
+					\draw[red,line width=2pt] (-9,-9/8,-8) -- (8,1,7);
+					\end{axis}
+					
+			\end{tikzpicture}\\
+			$\vec{w}$ steht rechtwinklig zu $\vec{n}$, deshalb \[
+			\vec{w} \circ \vec{n} = 0
+			.\] 
+			Außerdem liegt kein Punkt der Gerade auf der Ebene. Es gibt also
+			\textbf{keine} Lösung des Gleichungssystems.
+	\end{center}
+	\newpage\vspace*{1cm}
+		\item Die Gerade liegt \textbf{auf} der Ebene. (Wie auch die beiden Punkte $S_1$ und  $S_2$.)
+		\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick}]
+					
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = black!50!white] {x + y};
+					\draw (0,0,0) -- (-8,0,0);
+					\draw (0,0,0) -- (0,0,15);
+					\draw (0,0,0) -- (0,-8,0);
+					\draw[red,line width=2pt] (-9,9,0) -- (9,-9,0);
+					\draw (-10,10,1) node[red] {$g$};
+					\draw (-6,6,0) node {$+ $};
+					\draw (6,-6,0) node {$+$};
+					\draw (5,-7,0) node {$S_1$};
+					\draw (-7,5,0) node {$S_2$};
+				\end{axis}
+			\end{tikzpicture}\\
+			$\vec{w}$ steht rechtwinklig zu $\vec{n}$, deshalb \[
+			\vec{w} \circ \vec{n} = 0
+			.\] 
+			Außerdem liegt jeder Punkt der Gerade auf der Ebene. Es gibt also
+			\textbf{unendlich viele} Lösungen des Gleichungssystems.
+	\end{center}
+
+	\end{itemize}
+	\vspace*{2cm}
+	Die genaue Vorgehensweise werden wir wieder über ein Diagramm darstellen. 
+	Gegeben sei hierfür die Gerade $g: \; \vec{x_g} = \vec{z}+ k\cdot \vec{w}$, genauer \[
+	g:\quad \Spvek{x_1;x_2;x_3} = \Spvek{z_1;z_2;z_3} + k \cdot \Spvek{w_1;w_2;w_3}
+	.\] 
+	Das führt zu dem zugehörigen Gleichungssystem
+	\begin{align*}
+		x_1 &= z_1 + k \cdot w_1\\
+		x_2 &= z_2 + k\cdot w_2\\
+		x_3 &= z_3 + k\cdot w_3
+	.\end{align*}
+	Mit diesen Komponenten und der gegebenen Ebene können wir nun die Lagebeziehung folgender maßen 
+	betrachten.
+\begin{center}
+		\begin{tikzpicture}[>=latex,every node/.style={draw,rectangle, rounded corners,minimum width={2em},node distance=2em}]
+			\node (one) {Gegeben: Ebene $E$ und Gerade  $g:\; \vec{x} = \vec{z} + k\cdot \vec{w}$};
+			\node [below of=one](two) {Berechne $\vec{n}$ der Ebene};
+			\node [below of=two,node distance=5em](three) {\parbox{6.2cm}{\qquad Ist $\vec{n}$ rechtwinklig zu $\vec{w}$ ?
+						{\large\[\vec{n} \circ \vec{w} = 0 \quad ?\]}
+	\qquad \quad\; Ja \qquad\qquad Nein}};
+\node [below right of=three,node distance=10em] (four) {\parbox{4.2cm}{Die Gerade \textbf{schneidet}\\ die Ebene}};
+\node [below left of=three, node distance=10em] (five) {\parbox{4.6cm}{Die Gerade ist \textbf{parallel}\\ zur Ebene 
+	oder liegt\\ \textbf{auf} der Ebene}};
+\node [below of=five,node distance = 5em] (six) {\parbox{4cm}{Liegt $\vec{z}$ auf $E$ ? \\ 
+	\hspace*{0.8cm}  Ja  \qquad Nein}};
+	\node [below left of=six,node distance= 7em] (seven) {\parbox{3cm}{Die Gerade $g$ liegt \textbf{auf} der Ebene  $E$}};
+	\node [below right of=six, node distance = 7em] (eight) {\parbox{3cm}{Die Gerade $g$ ist \textbf{parallel} zur Ebene  $E$}}; 
+	\node [below of = eight, node distance = 6em] (eightdotone) {\parbox{3.5cm}{
+				Den Abstand $d$ zur Ebene berechnen
+		wir indem wir den Abstand von  $\vec{z}$ zur Ebene berechnen.}};
+	\node [below right of=four,node distance=6em] (nine) {\parbox{5cm}{Stelle 
+				das Gleichungssytem aus $g$ und  $E$ auf.}};
+		\node[below of=nine,node distance=3.5em] (ten) {\parbox{7cm}{Löse das Gleichungssystem nach $k$. Du erhältst
+			genau eine Lösung  $k_\mathds{L}$.}};
+		\node[below of=ten,node distance=5.5em] (eleven) {\parbox{7cm}{Berechne nun den Durchstoßpunkt $S$ indem du 
+			$k_\mathds{L}$ in  $g$ einsetzt.\large  \[
+				\vec{0S} = \vec{z} + k_\mathds{L} \cdot  \vec{w}
+			.\] } };
+			\draw [->] (one) -- (two);
+			\draw [->] (two) -- (three);
+			\draw [->] (three) -- (four) ;
+			\draw [->] (three) -- (five);
+			\draw [->] (five) -- (six);
+			\draw [->] (six) -- (seven) ;
+			\draw [->] (six) -- (eight);
+			\draw [->] (four) -- (nine);
+			\draw [->] (ten) -- (eleven);
+			\draw [->] (nine) -- (ten);
+			\draw [->] (eight) -- (eightdotone);
+
+	\end{tikzpicture}
+		
+	\end{center}
+	{
+	
+		\begin{center}	
+		\begin{tabular}{|c|c|}
+			\hline $E:$&\textbf{Parameterform}\\
+		   & $\vec{x}= \vec{s}+ t_1 \cdot \vec{r_1} + t_2 \cdot \vec{r_2}$\\\hline
+		   $\vec{n}$& $\vec{n}:=\vec{r_1}\times \vec{r_2}$\\\hline
+		   Gleichungssystem &$g=E$\\
+		    &$\vec{z}+ k\cdot \vec{w}
+		  =\vec{s} + t_1 \cdot \vec{r_1} + t_2\cdot \vec{r_2}$\\\hline\hline
+		    $E:$&\textbf{Koordinatenform}\\
+			&$ax+by+cz=d$\\\hline
+		    $\vec{n}$ &\tiny $\vec{n}:= \Spvek{a;b;c}$\\\hline
+			Gleichungssystem&$a\cdot x_1 + b\cdot x_2 + c\cdot x_3 = d$\\
+		&$a\cdot \left( z_1 + k\cdot w_1 \right) + b\cdot \left(z_2 + k\cdot w_2  \right)+c
+		\cdot \left( z_3 + k \cdot w_3 \right)=d$\\\hline\hline
+			$E:$&	 \textbf{Hessesche NF} \\
+		    &$\vec{n_0} \circ \left( \vec{x} - \vec{s} \right) = 0 $\\\hline
+			$\vec{n}$ & $\vec{n} := \vec{n_0}$\\\hline
+		    Gleichungssytem &	\small$\vec{n_0} \circ \left( \vec{x_g} - \vec{s}\right)=0 $\\
+		    &$0=\vec{n_0} \circ  \left( 
+			\Spvek{z_1 + k\cdot w_1;z_2 + k\cdot w_2; z_3 + k\cdot w_3} -\vec{s}\right) $ \\ \hline
+			\end{tabular}
+	\end{center}}
+	
+	
+	\Aufgabe{(Lagebeziehung Ebene - Gerade)}{
+		Analysiere die Lagebeziehungen zwischen den gegebenen Ebenen und Geraden.
+		\begin{enumerate}[(a)]
+			\item \[
+			E:\quad 3x - 4y + z = 5
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{0;3;1} + k\cdot \Spvek{-10;-8;-2}
+			.\] 
+			\item  \[
+			E:\quad \Spvek{0;0.6;-0.8} \circ \left( \vec{x} - \Spvek{0;-2;5} \right) = 0
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{2;-1;3} + k\cdot \Spvek{2;-12;8}
+			.\] 
+
+			\item  \[
+			E:\quad \vec{x} = \Spvek{-5;5;1} + t_1 \cdot \Spvek{8;2;-2} + t_2 \cdot \Spvek{0;-2;4}
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{-1;8;-4} + k\cdot \Spvek{-4;-3;5}
+			.\] 
+
+			\item  \[
+			E:\quad \vec{x} = \Spvek{-1;3;0} + t_1 \cdot \Spvek{-1;2;1} + t_2 \cdot \Spvek{-1;0;5}
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{-1;0;0} + k\cdot \Spvek{5;1;-1}
+			.\] 
+
+			\item  \[
+			E:\quad x - 2z = 2
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{8;-2;5} + k\cdot \Spvek{-1;0;6}
+			.\] 
+
+			\item  \[
+			E:\quad x + y + z = 3
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{-4;6;4} + k\cdot \Spvek{-2;-2;-2}
+			.\] 
+
+			\item  \[
+			E:\quad \vec{x} = \Spvek{-2;0;3} + t_1 \cdot \Spvek{0;0;-1} + t_2 \cdot \Spvek{0;-2;1}
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{-2;1;1} + k\cdot \Spvek{-3;7;1}
+			.\] 
+
+			\item  \[
+			E:\quad \Spvek{-1;0;0} \circ \left( \vec{x} - \Spvek{-1;5;5} \right) = 0
+			.\]  
+			\[
+			g:\quad  \vec{x}=\Spvek{-9;2;0} + k\cdot \Spvek{7;2;5}
+			.\] 
+
+		\end{enumerate}
+	}
+
+	\newpage
+	
+
+	\subsubsection{Lagebeziehung Ebene - Ebene}
+	Die letzten möglichen Lagebeziehungen können wir zwischen zwei Ebenen $E_1$ und  $E_2$ führen. Auch hier gibt
+	es 3 verschiedene mögliche Ausgänge. Seien $\vec{n_1}$ und $\vec{n_2}$ die Normalenvektoren der beiden
+	Ebenen.
+	 \begin{itemize}
+		 \item Die beiden Ebenen $\color{blue}E_1\color{black}$ und  $\color{red}E_2\color{black}$
+			 \textbf{schneiden} sich in der Schnittgerade  
+			 $\color{green}g_S\color{black}$.
+		\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick}]
+					
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = blue!50!black] {x + y};
+						
+					\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = red!50!black] {-x - y};
+
+					\draw[green,line width=2pt] (-9,9,0) -- (9,-9,0);
+					\draw (-10,10,1) node[green] {$g_S$};
+				\end{axis}
+			\end{tikzpicture}\\
+			$\vec{n_1}$ und  $\vec{n_2}$ sind \textbf{linear unabhängig}.\[
+				\vec{n_1} \not{\mid  \mid}  \;\vec{n_2}
+			.\] 
+	\end{center}
+
+\item Die beiden Ebenen $\color{blue}E_1\color{black}$ und  $\color{red}E_2\color{black}$ liegen 
+	\textbf{parallel} zueinander mit Abstand $\color{green}d\color{black}$.
+		\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick}]
+					
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = blue!50!white] {x + y};
+					
+					\draw[green] (7,7/8,6) -- (7,7/8,4.2);
+					\draw (8,1.1,4) node[green] {\tiny$d$}; 
+					\draw (-9,-1,-10) node[green] {\tiny$d$}; 
+					\draw[green] (-8,-1,-7) -- (-8,-1,-9.2);
+					\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = red!50!white] {x + y+2};
+
+					\end{axis}
+				
+			\end{tikzpicture}\\
+			$\vec{n_1}$ und  $\vec{n_2}$ sind \textbf{linear abhängig}.
+					\[
+				\vec{n_1} \;\mid  \mid  \;\vec{n_2}
+			.\] 
+			Außerdem gibt es \textbf{keinen} Punkt welcher auf beiden Ebenen liegt.
+
+	\end{center}
+\item Die beiden Ebenen $\color{blue}E_1\color{black}$ und  
+	$\color{red}E_2\color{black}$ sind \textbf{identisch}, liegen also aufeinander.
+		\begin{center}
+			\begin{tikzpicture}[vector/.style={-stealth,red,very thick}]
+					
+					\begin{axis}
+						[
+						grid=both,
+						grid style={line width=.1pt, draw=gray!10},
+						major grid style={line width=.2pt,draw=gray!50},
+						axis lines=middle,
+						minor tick num=4,
+						enlargelimits={abs=0.5},
+						axis line style={latex-latex},
+						ticklabel style={font=\tiny,fill=white},
+						samples=50
+						]
+						\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = blue!50!white] {x + y};
+					
+					\addplot3 [
+						domain =-8:8,
+						domain y = -8:8,
+						samples = 20,
+						samples y = 8,
+						mesh,
+						draw = red!50!white,dashed] {x + y};
+					\draw (0,0,0) -- (-8,0,0);
+					\draw (0,0,0) -- (0,0,15);
+					\draw (0,0,0) -- (0,-8,0);
+
+					\end{axis}
+					
+			\end{tikzpicture}\\
+			$\vec{n_1}$ und  $\vec{n_2}$ sind \textbf{linear abhängig}.
+					\[
+				\vec{n_1} \;\mid  \mid  \;\vec{n_2}
+			.\] 
+			Außerdem gibt es \textbf{einen} Punkt welcher auf beiden Ebenen liegt.
+	\end{center}
+
+	\end{itemize}
+	\begin{center}
+		\begin{tikzpicture}[>=latex,every node/.style={draw,rectangle, rounded corners,minimum width={2em},node distance=2em}]
+			\node (one) {Gegeben: Ebenen $E_1$ und $E_2$};
+			\node [below of=one](two) {Berechne die Normalen  $\vec{n_1}$ und $\vec{n_2}$ der Ebenen};
+			\node [below of=two,node distance=5em](three) {\parbox{6.2cm}{\; Ist $\vec{n_1}$ linear
+						abhängig von $\vec{n_2}$ ?
+						{\large\[\vec{n_1}  \mid  \mid  \vec{n_2} \quad ?\]}
+	\qquad \quad\; Ja \qquad\qquad Nein}};
+\node [below right of=three,node distance=10em] (four) {\parbox{4.2cm}{Die Ebenen \textbf{schneiden}\\ einander.}};
+\node [below left of=three, node distance=10em] (five) {\parbox{4.6cm}{Die Ebenen liegen \textbf{parallel} 
+			zu einander 
+	oder sind \textbf{identisch} }};
+\node[below of=five, node distance = 5em] (fivedotone) {\parbox{4cm}{Wähle einen beliebigen Punkt $P$ welcher auf  
+	$E_1$ liegt.}};
+\node [below of=fivedotone,node distance = 5em] (six) {\parbox{4cm}{Liegt $P$ auf $E_2$ ? \\ 
+	\hspace*{0.8cm}  Ja  \qquad Nein}};
+	\node [below left of=six,node distance= 7em] (seven) {\parbox{3cm}{Die beiden Ebenen $E_1$ und  $E_2$ sind 
+		\textbf{identisch}.}};
+	\node [below right of=six, node distance = 7em] (eight) {\parbox{3cm}{Die beiden Ebenen $E_1$ und  $E_2$
+		liegen \textbf{parallel} zueinander.}};
+	\node [below of = eight, node distance = 7em] (eightdotone) {\parbox{3.5cm}{Den Abstand $d$ berechnen
+		wir, indem wir den Abstand eines Punktes $P$ von $E_1$ zu $E_2$ berechnen.}};
+	\node [below right of=four,node distance=7em] (nine) {\parbox{5cm}{Berechne den Richtungsvektor $\vec{r}$ 
+		der Gerade mittels \[
+		\vec{r}=\vec{n_1} \times  \vec{n_2}
+		.\] }};
+			\node[below of=nine,node distance=6.5em] (ten) {\parbox{7cm}{Finde eine beliebige Lösung 
+				zum Gleichungssystem aus $E_1$ und  $E_2$ für $x$, $y$ und  $z$. Wir nennen
+		diese Lösungen  $x_\mathds{L}$,  $y_{\mathds{L}}$ und $z_{\mathds{L}}$.}};
+		\node[below of=ten,node distance=7em] (eleven) {\parbox{7cm}{
+			Die Schnittgerade $g_S$ ist nun  \[
+				g_S:\; \vec{x} = \Spvek{x_{\mathds{L}}; y_{\mathds{L}};z_{\mathds{L}}} + 
+				k\cdot \vec{r}
+			.\] 			} };
+			\draw [->] (one) -- (two);
+			\draw [->] (two) -- (three);
+			\draw [->] (three) -- (four) ;
+			\draw [->] (three) -- (five);
+			\draw [->] (five) -- (fivedotone);
+			\draw [->] (fivedotone) -- (six);
+			\draw [->] (six) -- (seven) ;
+			\draw [->] (six) -- (eight);
+			\draw [->] (four) -- (nine);
+			\draw [->] (ten) -- (eleven);
+			\draw [->] (nine) -- (ten);
+			\draw [->] (eight) -- (eightdotone);
+
+	\end{tikzpicture}
+		
+	\end{center}
+	Das Gleichungssystem der beiden Ebenen $E_1$ und  $E_2$ können wir dabei einfach erstellen
+	indem wir die zu den jeweiligen Darstellungsformen passenden Gleichungssysteme gleichsetzen oder ineinander
+	einsetzten. Da die Gleichungssysteme unendlich viele Lösungen haben, lohnt es sich zu probieren eine Variable
+	einfach auf $0$ zu setzen (dies muss mit mindestens einer funktionieren). Die übrigen Variablen 
+	können wir dann beliebig wählen, wobei uns eine vorherige Vereinfachung des Gleichungssystems viel 
+	Denkarbeit abnehmen wird.\vspace*{2cm}
+		
+	\begin{sidewaystable}
+		\begin{tabular}{|c|c|c|c|}
+			\hline 
+			$ \qquad\qquad\qquad E_2$
+			&\textbf{Parameterform}&\textbf{Koordinatenform}&\textbf{Hessesche NF}\\
+			$E_1\qquad\qquad\qquad$&$\vec{x}= \vec{s_2}+ k_1 \cdot \vec{d_1} + k_2 \cdot \vec{d_2}$&
+		$a_2x+b_2y+c_2z=d_2$	&$\vec{n_2} \circ \left( \vec{x} - \vec{s_2} \right) = 0 $\\\hline
+			\textbf{Parameterform}&&&\\
+			$\vec{x}= \vec{s_1}+ t_1 \cdot \vec{r_1} + t_2 \cdot \vec{r_2}$&\parbox{5cm}{Gleichsetzen $\rightarrow$ Beliebige Lösung für $t_1,t_2$ wählen $\rightarrow$ Einsetzen in  $E_1$\\}& 
+			\parbox{5cm}{Einsetzen der Zeilen
+			von $E_1$ in $E_2$ $\rightarrow$ Bel. Lösung für $t_1$ und $t_2$ $\rightarrow$ in $E_1$ einsetzen.\\ }
+			&\parbox{5cm}{Einsetzen der Zeilen
+			von $E_1$ in $E_2$ $\rightarrow$ Bel. Lösung für $t_1$ und $t_2$ $\rightarrow$ in  $E_1$ einsetzen.\\ } \\\hline
+			\textbf{Koordinatenform}&&& \\
+			$a_1x+b_1y+c_1z=d_1$&&\parbox{5cm}{$d$'s auf die andere
+			Seite bringen $\rightarrow$ Gleichsetzen $\rightarrow$ Beliebige Lösung wählen\\}
+			&\parbox{5cm}{$d_1$ in  $E_1$ auf die andere Seite bringen  $\rightarrow$ 
+			gleichsetzen  $\rightarrow$ Bel. Lösung wählen\\}\\\hline
+			\textbf{Hessesche NF}&&&\\
+			$\vec{n_1} \circ \left( \vec{x} - \vec{s_1} \right) = 0 $&&&\parbox{5cm}{Gleichsetzen $\rightarrow$ Beliebige Lösung wählen\\}\\\hline
+		\end{tabular}
+	\end{sidewaystable}
+	\Aufgabe{}{
+		Führe eine Lagebeziehungsanalyse zwischen den beiden gegebenen Ebenen durch. Gibt ggf. den 
+		Abstand oder die Schnittgerade an.
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{align*}
+					E_1&: \quad x - 5y + 2z = 3\\
+					E_2&: \quad -2x + 10y -4z = -6
+				.\end{align*}
+			\item \begin{align*}
+					E_1&:\quad \vec{x} = 
+					\Spvek{-3;1;2} + t_1 \cdot \Spvek{-3;2;3} + t_2 \cdot \Spvek{1;0;-1}\\
+					E_2&:\quad  x -z = -2
+				.\end{align*}
+
+			\item \begin{align*}
+					E_1&:\quad \vec{x} = 
+					\Spvek{-4;2;6} + t_1 \cdot \Spvek{-1;1;1} + t_2 \cdot \Spvek{2;-1;-3}\\
+					E_2&:\quad \vec{x} = 
+					\Spvek{1;-1;-1} + t_1 \cdot \Spvek{-3;2;4} + t_2 \cdot \Spvek{0;1;-1}\\
+				.\end{align*}
+
+			\item \begin{align*}
+					E_1&:\quad \Spvek{0.6;0;-0.8} \circ \left( \vec{x} - \Spvek{3;4;-5} \right) 
+					= 0\\
+					E_2&: \quad  -x - 7y + 2z = 0
+				.\end{align*}
+
+			\item \begin{align*}
+					E_1&: \quad -2x +7y -3z = 5\\
+					E_2&:  6x - 21y + 9z = -15
+				.\end{align*}
+
+			\item \begin{align*}
+					E_1&:\quad \Spvek{0;0;-1} \circ \left( \vec{x} - \Spvek{1;1;-5} \right) 
+					= 0\\
+					E_2&:\quad \vec{x} = 
+					\Spvek{1;0;-3} + t_1 \cdot \Spvek{-1;0;0} + t_2 \cdot \Spvek{2;-5;0}\\
+				.\end{align*}
+
+			\item \begin{align*}
+					E_1&: \quad -2 - y + 5z = 8\\
+					E_2&:\quad \vec{x} = 
+					\Spvek{1;0;4} + t_1 \cdot \Spvek{4;-6;7} + t_2 \cdot \Spvek{-1;-1;5}\\
+				.\end{align*}
+
+			\end{enumerate}
+	}
+
 \end{document} 

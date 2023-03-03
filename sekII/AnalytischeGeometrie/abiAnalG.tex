@@ -1,0 +1,229 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fancyheadings}
+\usepackage[german]{babel}
+\usepackage{german}
+
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm]{geometry}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{dsfont}
+\usepackage{multicol}
+\usepackage{pgfplots}
+\usetikzlibrary{trees}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{shapes.geometric}
+
+
+\newcommand{\contradiction}{{\hbox{%
+			\setbox0=\hbox{$\mkern-3mu\times\mkern-3mu$}%
+			\setbox1=\hbox to0pt{\hss$\times$\hss}%
+			\copy0\raisebox{0.5\wd0}{\copy1}\raisebox{-0.5\wd0}{\box1}\box0
+}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fach}{Analytische Geometrie}
+\newcommand{\Semester}{SoSe 21}
+\newcommand{\Uebungsblatt}{Abi 2012/2013 GK Nachtermin: Aufgabe B2} 
+\newcommand{\nl}{\\[0,20cm]}
+\newcommand{\lnl}{\\[0,30cm]}
+\newcommand{\xlnl}{\\[0,75cm]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\parindent}{0em}
+\topmargin -2.0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\setlength{\textheight}{9.6in}
+\setlength{\textwidth}{6.9in}
+\addtolength{\hoffset}{-22pt}
+
+
+\newcommand{\limes}[2]{
+	\lim\limits_{x\rightarrow #1}\quad  #2
+}
+\newcommand{\limesh}[1]{
+	\lim\limits_{h\rightarrow 0}\quad  #1
+}
+\newcommand{\limesr}[2]{
+	\lim\limits_{\underset{x > #1}{x\rightarrow #1}}\quad  #2
+}
+\newcommand{\limesl}[2]{
+	\lim\limits_{\underset{x < #1}{x\rightarrow #1}}\quad  #2
+}
+\newcommand{\Aufgabe}[2]{
+	{
+		\vspace*{0.3cm}
+		\begin{tcolorbox}[breakable,colback=yellow!0,colframe=black!65!black,title=\textbf{Aufgabe #1:},width=\linewidth ]
+			{#2}
+		\end{tcolorbox}
+		
+		
+	}
+}
+\newcommand{\Hinweis}[1]{
+	\vspace*{0.3cm}
+	\begin{tcolorbox}[breakable,colback=yellow!10,colframe=yellow!65!black,title=\textbf{Hinweis:},width=\linewidth ]
+		{#1}
+	\end{tcolorbox}
+}
+\newcommand{\SHA}[1]{
+	\vspace*{0.1cm}
+	\begin{tcolorbox}[breakable,colback=blue!5,colframe=blue!65!black,title=\textbf{Richtiger SHA256 Hash:},width=\linewidth ]
+		{\texttt{{#1}}}
+	\end{tcolorbox}
+}
+\newcommand{\Beispiel}[1]{
+	\vspace*{0.2cm}
+	\begin{tcolorbox}[breakable,colback=yellow!0,colframe=green!65!black,title=\textbf{Beispiel:},width=\linewidth ]
+		{#1}
+	\end{tcolorbox}
+}
+\newcommand{\p}[2]{\pi_{#2}^{(#1)}}
+\newcommand{\eing}[1]{\begin{enumerate}[\quad]
+		\item #1
+\end{enumerate}}
+
+\newcommand{\abc}[1]{
+	\begin{enumerate}[(a)]
+		#1
+	\end{enumerate}
+}
+\newcommand{\vectr}[3]{\begin{pmatrix}#1\\#2\\#3
+\end{pmatrix}}
+\newcommand{\integral}[4]{\int\limits_{#1}^{#2} {#3} {\quad d #4}}
+\newcommand{\summe}[3]{\sum\limits_{#1}^{#2} #3}
+\begin{document}
+	\thispagestyle{fancy}
+	\pagestyle{fancy}
+	\begin{center}
+		\LARGE \sf \textbf{ \Uebungsblatt{}}
+	\end{center}
+	\vspace*{0.1cm}
+	\tableofcontents
+	\newpage
+	\thispagestyle{fancy}
+	\setcounter{section}{1}
+	\section{Aufgabe B2}
+	\subsection{Längen der Spannseile von Punkt B}
+		\begin{align*}
+			\vec{BD}&= D - B = \vectr{-40}{-80}{65}\\
+			\vec{BE}&= D - E = \vectr{-40}{-80}{116}\\\\
+			\implies \left|\vec{BD}\right| &= \sqrt{ (-40)^2 + (-80)^2 + (65)^2}=110.57\\
+			\implies \left|\vec{BD}\right| &= \sqrt{ (-40)^2 + (-80)^2 + (116)^2}=146.48
+		\end{align*}
+	\newpage
+	\subsection{A und C bestimmen}
+		\subsubsection{C bestimmen}
+		\[H: x+20z=0,\qquad g: \vec{x}=\vec{E}+ k \cdot \vec{v}=\vectr{0}{0}{114} + k\cdot \vectr{5}{-10}{14}\]
+		Schnittpunkt $g$ mit $H$ ausrechnen: $g$ in $H$ einsetzten:
+		\begin{align*}
+			x+20z&=0\\
+			5k + 20(114 + k\cdot 14) &= 0&&\\
+			5k + 2280 + 280k &= 0&&\\
+			285k + 2280&=0&& \vert \,-2280\\
+			285k &=- 2280 &&\vert \,:285\\
+			k&=-8 
+		\end{align*} 
+		$k$ einsetzten und schnittpunkt ausrechnen:
+		\begin{align*}
+			\vec{OC}&=\vectr{0}{0}{114} -8\cdot \vectr{5}{-10}{14}=\vectr{0}{0}{114} + \vectr{-40}{80}{-112}\\\\
+			&=\vectr{-40}{80}{2}\\
+			\implies C&=(-40|\,80|\,2)
+		\end{align*}
+		\subsubsection{A bestimmen}
+		\[A=(0,y,0),\qquad \left|\vec{EA}\right| = 145,\qquad y\in \mathds{R}^-\]
+		Gleichung:
+		\begin{align*}
+			\left|\vec{EA}\right| &= 145&&\\
+			\sqrt{(0)^2+(y)^2+(-114)^2}&= 145 &&\vert\,\,  ^2 \\
+			(y)^2+(-114)^2 &= 145^2&&\vert\, - (-114)^2 \\
+			y^2 &= 145^2- (-114)^2 = 8029\\
+			\implies y& = -\sqrt{8029}=-89.6\\\\
+			\implies A=(0|\,-89.6|\,0)
+		\end{align*}
+	\newpage
+	\subsection{Landwirtschaftliche Nutzfläche}
+	\subsubsection{$\Delta OBD$ kein rechtwinkliges Dreieck}
+		\[\vec{OB}= \vectr{40}{80}{-2},\quad \vec{OD}= \vectr{0}{0}{63},\quad  \vec{BD}= \vectr{-40}{-80}{65} \]
+		
+		Bestimmung des Winkels (über Skalarprodukt):
+		\begin{align*}
+			\vec{OB} \circ \vec{OD} &= 40\cdot 0 + 80 \cdot 0 - 2 \cdot 63\\
+									&=- 126\not=0\\
+									\implies \text{Kein rechter Winkel bei } &O\\\\
+		\vec{OB} \circ \vec{BD} &= 40\cdot (-40) + 80 \cdot (-80) - 2 \cdot 65\\
+		&=-8130\not=0\\
+		\implies \text{Kein rechter Winkel bei } &B\\\\
+		\vec{OD} \circ \vec{BD} &= 0\cdot (-40) + 0 \cdot (-80) + 63 \cdot 65\\
+		&=4095\not=0\\
+		\implies \text{Kein rechter Winkel bei } &D
+	\end{align*}
+	$\implies$ kein rechtwinkliges Dreieck $\Delta OBD$
+	\subsubsection{Winkel $\beta$ zwischen $\vec{BO}$ und $\vec{BD}$}
+		\[\vec{BO}= \vectr{-40}{-80}{2},\quad \vec{BD}= \vectr{-40}{-80}{65}\]
+		Bestimmung des Winkels (über Skalarprodukt):
+		\begin{align*}
+			\frac{\vec{BO} \circ \vec{BD} }{|\vec{BO}| \cdot |\vec{BD}|}&= \frac{40^2 + 80^2 + 2\cdot 65}{\sqrt{40^2+80^2+2^2} \cdot \sqrt{40^2+80^2+65^2}}\\
+			&= \frac{8130}{9891.86} = 0.8219\\\\
+			\beta &= acos(0.8219)= cos^{-1}(0.8219) = 34.72^\circ
+		\end{align*}
+	\Hinweis{Dein Fehler war die beiden Vektoren in unterschiedliche Richtungen laufen zu lassen. Es wird immer der Winkel berechnet welcher in Richtung beider Vektoren anliegt. Wenn du von $180^\circ$ deinen Winkel abziehst wirst du auf das gleiche $\beta$ kommen wie ich. }
+	\subsubsection{Abstand von $B$ und $F$}
+		Pythagoras:
+		\begin{align*}
+			tan(\beta) &= \frac{4}{|\vec{BF}|}\\
+			\Leftrightarrow |\vec{BF}|&=\frac{4}{tan(\beta)}\\
+			&=5.77 m
+		\end{align*}
+	\subsubsection{Koordinaten Punkt F}
+	\[\vec{BO}= \vectr{-40}{-80}{2},\quad |\vec{BF}|=5.77 m \]
+	Über Gerade lösen:
+	\begin{align*}
+		\vec{OF} &= \vec{OB} + \frac{|\vec{BF}|}{|\vec{BO}|}\cdot \vec{BO}\\
+			&=  \vectr{40}{80}{-2} + \frac{5.77}{\sqrt{40^2+80^2+2^2}}\cdot \vectr{-40}{-80}{2}\\
+			&= \vectr{40}{80}{-2} + 0.06\cdot \vectr{-40}{-80}{2}\\
+			&=\vectr{40}{80}{-2}+\vectr{-2.4}{-4.8}{0.12}\\
+			&=\vectr{37.6}{77.6}{-1.88}\\\\
+			\implies F&=(37.6|\,77.6|\,-1.88)
+	\end{align*}
+\newpage
+\subsection{Sturm und Sendemast}
+	\[g_1:\vec{x}=\vectr{100}{10}{-4}+ k \cdot  \vectr{-100.10}{- 10.20}{154.00} ,\qquad g_2:\vec{x}=\vectr{10}{100}{0.75} + t \cdot \vectr{-10.10}{-100.20}{149.25}\]
+	Schnittpunkt $g_1$ und $g_2$:
+	\begin{align*}
+		\vectr{100}{10}{-4}+ k \cdot  \vectr{-100.10}{- 10.20}{154.00} &= \vectr{10}{100}{0.75} + t \cdot \vectr{-10.10}{-100.20}{149.25} && \vert \, -\vectr{100}{10}{-4}\\
+	 k \cdot  \vectr{-100.10}{- 10.20}{154.00} &= \vectr{-90}{90}{4.75} + t \cdot \vectr{-10.10}{-100.20}{149.25} && \vert \, - t \cdot \vectr{-10.10}{-100.20}{149.25}\\
+	 k \cdot  \vectr{-100.10}{- 10.20}{154.00}- t \cdot \vectr{-10.10}{-100.20}{149.25} &= \vectr{-90}{90}{4.75} && \\
+	 \implies k=1, \quad & t=1&&\\\\
+	 \text{Einsetzten ergibt:}&&&&\\
+	 E' &= ( -0,1 |\, -0,2 |\, 150 )
+	\end{align*}
+	Winkel zwischen Sendemast vor und Nach dem Sturm ($\varphi$):
+	\[\vec{OE'}=\vectr{-0.1}{-0.2}{150} ,\qquad \vec{OE}=\vectr{0}{0}{114} \] 
+	\begin{align*}
+		\frac{\vec{OE'} \circ \vec{OE} }{|\vec{OE'}| \cdot |\vec{OE}|}&= \frac{-0.1 \cdot 0 + -0.2 \cdot 0 + 150 \cdot 114}{\sqrt{(-0.1)^2+(-0.2)^2+(150)^2}\cdot \sqrt{(0)^2+(0)^2+(114)^2}}\\
+		&=\frac{17100}{17100.02}=0.99999883\\\\
+		 &\color{gray}\text{ Runden ist hier nicht sinnvoll, da } cos(1)=0^\circ \text{ ist.}\color{black} \\
+		\varphi = acos(0.99999883) &= cos^{-1}(0.99999883) \approx 0.09^\circ 
+	\end{align*}
+	Damit ist der Mast auch nichtmehr senkrecht.
+	\Hinweis{Theoretisch könnte man auch zeigen das der Mast nicht mehr senkrecht ist, indem du das Skalarprodukt mit den Einheitsvektoren $e_1=\vectr{1}{0}{0},\, e_2=\vectr{0}{1}{0}$ bildest. (Theoretisch müsste das aber auch über Winkel ($\varphi$) argumentierbar sein, denn $E$ war ja senkrecht, also ist $E'$ nicht mehr senkrecht wenn der Winkel größer als $0$ ist)}
+\end{document} 

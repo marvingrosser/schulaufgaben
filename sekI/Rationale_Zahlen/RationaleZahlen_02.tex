@@ -1,0 +1,113 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fancyheadings}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm]{geometry}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{dsfont}
+\usetikzlibrary{trees}
+
+
+\tikzstyle{level 1}=[level distance=3.5cm, sibling distance=4.5cm]
+\tikzstyle{level 2}=[level distance=3.5cm, sibling distance=2cm]
+
+
+
+% Define styles for bags and leafs
+\tikzstyle{bag} = [text width=2em, text centered]
+\tikzstyle{end} = [circle, minimum width=3pt,fill, inner sep=1pt]
+
+\newcommand{\contradiction}{{\hbox{%
+			\setbox0=\hbox{$\mkern-3mu\times\mkern-3mu$}%
+			\setbox1=\hbox to0pt{\hss$\times$\hss}%
+			\copy0\raisebox{0.5\wd0}{\copy1}\raisebox{-0.5\wd0}{\box1}\box0
+}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fach}{Rationale Zahlen \quad $\mathds{Q}$}
+\newcommand{\Semester}{SoSe 21}
+\newcommand{\Uebungsblatt}{ Rationale Zahlen \quad $\mathds{Q}$} 
+\newcommand{\nl}{\\[0,20cm]}
+\newcommand{\lnl}{\\[0,30cm]}
+\newcommand{\xlnl}{\\[0,75cm]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\parindent}{0em}
+\topmargin -2.0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\setlength{\textheight}{9.6in}
+\setlength{\textwidth}{6.9in}
+\addtolength{\hoffset}{-22pt}
+
+
+
+\newcommand{\Aufgabe}[2]{
+	{
+		\vspace*{0.3cm}
+		\begin{tcolorbox}[breakable,colback=yellow!0,colframe=black!65!black,title=\textbf{Aufgabe #1:},width=\linewidth ]
+			{#2}
+		\end{tcolorbox}
+		
+		
+	}
+}
+\newcommand{\p}[2]{\pi_{#2}^{(#1)}}
+\newcommand{\eing}[1]{\begin{enumerate}[\quad]
+		\item #1
+\end{enumerate}}
+
+\newcommand{\abc}[1]{
+	\begin{enumerate}[(a)]
+		#1
+	\end{enumerate}
+}
+
+\newcommand{\integral}[4]{\int\limits_{#1}^{#2} {#3} {\quad d #4}}
+\newcommand{\summe}[3]{\sum\limits_{#1}^{#2} #3}
+\begin{document}
+	\thispagestyle{fancy}
+	\begin{center}
+		\LARGE \sf \textbf{\" Ubungsblatt 2 \Uebungsblatt{}}
+	\end{center}
+	\vspace*{0.1cm}
+	
+	%<<<
+	\Aufgabe{1 (Multiplikation/Division)}{
+		\begin{center}
+			\begin{align*}
+				&\textbf{(a)}\quad  \frac{12}{5}\cdot \frac{10}{3}\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\\\\
+				&\textbf{(b)}\quad  \frac{11}{8}\cdot \frac{56}{33}\qquad \\\\
+				&\textbf{(c)}\quad \frac{9}{10}\cdot \frac{8}{7}  \qquad \\\\
+				&\textbf{(d)}\quad \frac{4}{7}\cdot \frac{14}{2}\\\\
+				&\textbf{(e)}\quad \frac{15}{6}\cdot \frac{2}{9} \qquad \\\\
+				&\textbf{(f)}\quad 0\cdot \frac{8}{3} \qquad \\\\
+				&\textbf{(g)}\quad \frac{12}{5}: \frac{15}{7} \qquad \\\\
+				&\textbf{(h)}\quad\frac{11}{8}: \frac{55}{3}\\\\
+				&\textbf{(i)}\quad \frac{9}{10}: \frac{3}{7}\qquad \\\\
+				&\textbf{(j)}\quad \frac{7}{3}: \frac{14}{9}\\\\
+			\end{align*}
+		\end{center}
+	}
+
+\end{document} 
+

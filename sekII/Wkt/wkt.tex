@@ -1,0 +1,1013 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fancyheadings}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage{tcolorbox} %Die Bunten Boxen
+\usepackage{enumitem} %eigene Label Definition mit [label= ...] z.b. \alph*, \roman*, \arabic*
+\tcbuselibrary{breakable} %Boxen dürfen über mehrere Seiten gehen
+\usepackage{tikz} %Wahrscheinlichkeitsbäume
+\usetikzlibrary{trees} %Wahrscheinlichkeitsbäume
+\usepackage{dsfont} %für 1 mit doppelstrich
+\usepackage{lmodern,textcomp} %unwichtig
+\usepackage{graphicx}
+\usepackage{pgfplots}
+
+
+\usepackage{color}
+\definecolor{theWhite}{gray}{0.9}
+\definecolor{theBlack}{gray}{0.0}
+\usepackage{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fach}{Wahrscheinlichkeitstheorie} %Überschrift
+\newcommand{\Semester}{Sek II} %Semester
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Für Bäume mit tikz die Abstände
+\tikzstyle{level 1}=[level distance=3.5cm, sibling distance=3.5cm]
+\tikzstyle{level 2}=[level distance=3.5cm, sibling distance=2cm]
+
+% Def Ende und Knotenpunkte
+\tikzstyle{bag} = [text width=0.5em, text centered]
+\tikzstyle{end} = [circle, minimum width=3pt,fill, inner sep=1pt]
+
+\setlength{\parindent}{0em}
+\topmargin -1.0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.0in}
+%Aussehen und Abstände der Seiten
+
+
+\newcounter{Section} %Counter für Sektionen, Definitionen und Beispiele
+\newcounter{Definition}[Section]
+\newcounter{Beispiel}[Definition]
+\newcommand{\integral}[4]{\int\limits_{#1}^{#2} {#3} {\quad d #4}}
+\newcommand{\eing}[1]{
+	\begin{enumerate}[label=]
+		\item 	#1
+	\end{enumerate}}
+\newcommand{\Bem}[2][]{ %Bemerkungsbox Optional mit erweiterter Bemerkung in Überschrift
+	
+	\begin{tcolorbox}[breakable,colback=yellow!5,colframe=yellow!65!black,title=\textbf{Bemerkung: #1}]
+		{#2}
+	\end{tcolorbox}
+	
+}
+\newcommand{\Def}[2][]{ %Definitionsbox Optional mit erweiterter Bemerkung in Überschrift
+	{
+		\stepcounter{Definition}
+		
+		
+		\begin{tcolorbox}[breakable,colback=red!0,colframe=red!85!black,title=\textbf{Def. 	\arabic{Definition} \quad #1:}]
+			
+			{#2}
+		\end{tcolorbox}
+		
+		
+	}
+
+}
+\newcommand{\Lemma}[2][]{ %Lemmabox Optional mit erweiterter Bemerkung in Überschrift
+	{
+		\stepcounter{Definition}
+		
+		
+		\begin{tcolorbox}[breakable,colback=red!0,colframe=red!60!black,title=\textbf{Lemma 	\arabic{Definition} \quad #1:}]
+			
+			{#2}
+		\end{tcolorbox}
+		
+		
+	}
+	
+}
+\newcommand{\Bsp}[3][]{ %Beispielbox geteilt in Optional mit erweiterter Bemerkung in Überschrift UND 2 Argumenten, wobei auch eines leer sein darf
+	\stepcounter{Beispiel}
+	\begin{tcolorbox}[breakable,colback=green!0,colframe=green!50!black,title=\textbf{Beispiel\quad #1:}]
+		{#2}
+		{ #3}
+	\end{tcolorbox}
+}
+
+\newcommand{\bspe}[1]{ %Nummerierung per a), b), c) ...
+	\begin{enumerate}[label=\alph*)]
+		#1
+	\end{enumerate}
+}
+
+\newcommand{\Bew}[2][]{ %Beweisbox Optional mit erweiterter Bemerkung in Überschrift
+	\begin{tcolorbox}[breakable,colback=red!0,colframe=red!10!black,title=\textbf{Beweis #1:}]
+		{#2}\qed
+	\end{tcolorbox}
+}
+
+\newcommand{\Prop}[2][]{ %Propositionsbox Optional mit erweiterter Bemerkung in Überschrift
+	\stepcounter{Definition}
+	\begin{tcolorbox}[breakable,colback=red!0,colframe=red!50!black,title=\textbf{Proposition 	\arabic{Definition} \quad #1:}]
+		{#2}
+	\end{tcolorbox}
+}
+\newcommand{\punkte}[1]{ %Anstriche/Stichpunkte
+	\begin{enumerate}[label=\textbf{-}]
+		#1
+	\end{enumerate}
+}
+\newcommand{\Satz}[2][]{ %Satzbox Optional mit erweiterter Bemerkung in Überschrift
+		\stepcounter{Definition}
+	\begin{tcolorbox}[breakable,colback=red!0!,colframe=red!70!black,title=\textbf{Satz \arabic{Definition} \quad #1:}]
+		{#2}
+	\end{tcolorbox}
+}
+\newcommand{\Block}[2][]{ %Box mit eigener Überschrift
+	\begin{tcolorbox}[breakable,colback=red!0,colframe=white!30!black,title=\textbf{#1}]
+		{#2}
+	\end{tcolorbox}
+}
+
+\newcommand{\Pp}[1][]{ %IP mit optionalen Klammern dahinter, wo was reinkommt
+	\ifblank{#1}{\mathbb{P}}{\mathbb{P}\left(#1 \right)}
+	}
+\newcommand{\summe}[3]{\sum\limits_{#1}^{#2} #3} %Summe (vereinfacht) 3 Args: 1. Von	 2.Bis		3. Rechnung
+
+\newcommand{\verein}[3]{\bigcup\limits_{#1}^{#2} #3} %Vereinigung über ...(wie bei Summe)
+\newcommand{\wktsmod}[2]{ %Wahrscheinlichkeitsmodell
+	Modell:\begin{enumerate}[label= \quad]
+		\item #1
+		\item #2
+\end{enumerate} }
+\newcommand{\Anw}[1]{ %Anwendungsbox
+	\begin{tcolorbox}[breakable,colback=red!0,colframe=blue!40!black,title=\textbf{Anwendung:}]
+		\begin{enumerate}[label= \textbf{-} ]
+			#1
+		\end{enumerate}
+	\end{tcolorbox}
+}
+\newcommand{\aligne}[1]{
+	\begin{align*}
+		#1
+	\end{align*}
+}
+\newcommand{\Kor}[2][]{ % Korollarbox Optional mit erweiterter Bemerkung in Überschrift
+\stepcounter{Definition}
+\begin{tcolorbox}[breakable,colback=red!0!,colframe=red!50!black,title=\textbf{Korollar \arabic{Definition} \quad #1:}]
+	{#2}
+\end{tcolorbox}
+}
+
+\begin{document}
+
+	\thispagestyle{fancy}
+\rhead{\sf \Semester{} }
+\vspace*{5cm}
+\begin{center}
+	{ \Huge \sf \fontfamily{lmss}\selectfont Script}
+\end{center}
+	\begin{center}
+		{ \Huge \sf \fontfamily{lmss}\selectfont Wahrscheinlichkeitstheorie}
+	\end{center}
+	\vspace*{0.2cm}
+	
+\newpage
+\tableofcontents
+
+
+\newpage
+	%%Ab hier Script ####################################################################################
+	
+		\setcounter{section}{0}
+		\section{Wahrscheinlichkeitstheorie}
+		\subsection{Zufallsexperimente}
+		\subsubsection{Definitionen und Beispiele}
+		Wenn wir eine Münze werfen, so geben wir dem Ergebnis Kopf die Wahrscheinl. 0,5 .\\
+		Warum? \qquad Wir gehen davon aus, dass es zwei mögliche Ergebnisse gibt, Kopf und Zahl.\\
+		\\Mathematisch:\\
+		\par$\Omega = \{\text{Kopf, Zahl}\} \qquad  \text{Ergebnismenge [enthält alle mgl Ergebnisse]}$\\\\
+		Aus Symmetriegründen geben wir Kopf und Zahl die gleiche Wahrscheinlichkeit. Da der Münzwurf irgendein Ergebnis produziert, und Kopf und Zahl sich gegenseitig ausschließen, muss die Wkt. von Kopf und Zahl je 0,5 sein.\\(1,0 $\implies$ Irgendein Ergebnis [= 0,5 Kopf + 0,5 Zahl])\\\\
+		\Bem{ 
+			\par Es ist üblich Wkt.en als Bruch oder Dezimalzahl zu schreiben, also hier Wkt. von Kopf ist $\frac{1}{2}$.\\\\
+				Wenn wir das Münzwurfexperiment n-mal durchführen und mit $n_K$ (bzw. $n_Z$) die Anzahl von Ergebnis Kopf beschrieben, dann ist $\frac{n_K}{n}$ die relative Häufigkeit von Kopf.\\\\
+			Historisch:\\
+			\par  Buffon:\qquad $n=4040$, \qquad $n_K =2048$\\
+			\par Pearson: \qquad $n=24000$ ,\qquad $n_K=12012$\\\\
+			Aus $\frac{n_K}{n}=0,5$ in beiden Versuchen schließen wir, dass unser Modell für einen fairen Münzwurf ein gutes Modell ist, da es gute Vorhersagen für die Wahrscheinlichkeiten macht.\\\\
+		}
+		
+		\Def{ 
+			Eine Menge S heißt abzählbar unendlich, falls es eine bijektion von den natürlichen Zahlen ($\mathbb{N}$) nach S gibt. Eine Menge S heißt abzählbar, falls sie endlich oder abzählbar unendlich ist.
+		}
+		
+		\Def{
+			Ein diskreter Wkt.-Raum bzw. ein diskretes Wkt.-Modell ist ein Paar $(\Omega, p)$ wobei $\Omega$ eine abzählbare Ergebnismenge ist und 
+			\[p:\Omega \implies [0,1]\quad\text{mit}\quad \sum\limits_{x\in \Omega} p(x) = 1\]
+			die Wkt.-funktion auf $\Omega$, d.h. eine Funktion, die den verschiedenen Elementarereignissen $x\in\Omega$ ihre Wkt. zuordnet.\\
+			\Bsp{}{
+				\bspe{
+					\item fairer Münzwurf\[\Omega=\{\text{Kopf, Zahl}\}, \qquad p(Kopf)=p(Zahl)=\frac{1}{2}\]
+					\item  unfairer Münzwurf\\
+					Sei $a\in [0,1]\backslash \{\frac{1}{2}\}$ ein Parameter\\
+					\[\Omega=\{\text{Kopf, Zahl}\}, \qquad p(Kopf)=a, \qquad p(Zahl)=1-a\]
+				}
+				Die Wahl von $\Omega$ und Wkt.-funktion p sind Modellierungsannahmen, die gut oder schlecht sein können.\\
+				Das Schätzen von Parametern (etwa der Parameter a im obigen Beispiel) anhand von Daten ist Teil der (parametrischen) Statistik.
+			}
+		}
+	
+		\Def{
+			Sei $\Omega$ eine endliche Ergebnismenge. Wir nennen $p: \Omega \implies [0,1]$ mit $p(x)=\frac{1}{|\Omega|}$ für alle $x\in \Omega$ die Gleichverteilung auf $\Omega$.\\\\
+			Die Gleichverteilung ist eine gute Wahl, wenn:
+			\punkte{
+				\item wegen z.B. Symmetrie kein Elementarereignis wahrscheinlicher als ein anderes ist.
+				\item man aufgrund fehlender Informationen kein Argument hat einem Elementarereignis eine \\höhere/niedrigere Wkt. zuzuordnen.
+			}
+		}
+		\Def{ 
+			Für eine Menge S ist
+ 			$2^S := \{ S' \subset S\}$ \qquad die Potenzmenge von S, die Menge aller Teilmengen. Teilmengen von (Abzählbaren) Ergebnismengen nennen wir Ereignisse.
+ 		}
+		\Def{ 
+			Sei ($\Omega$,p) ein diskretes Wkt.modell.Für ein Ereignis $A \subset \Omega$ definieren wir die Wkt. von A als
+			\[\mathbb{P}(A)=\sum\limits_{x\in A} p(x)\]
+			Diese Funktion $\mathbb{P}: 2^\Omega \implies [0,1] $ heißt Wkts.verteilung oder Wkts.maß auf $\Omega$.\\
+		 	\Bsp{
+		 		Das Ereignis, dass ein Würfel ein Ergebnis kleiner gleich 3 hat, wird durch die Menge $\{1,2,3\}$ beschrieben.
+		 		\[\mathbb{P}(\{1,2,3\})= p(1) + p(2) + p(3) = 0.5\]
+		 		ist die Wkt. davon.
+	 		}{}
+ 		}
+ 	
+		\Bem{ 
+			Wir haben $p(x)=\mathbb{P}(\{x\})$, daher werden (diskrete) Wkts. modelle auch über das Paar $(\Omega, \mathbb{P})$ bestimmt.
+		}
+		\Prop{
+			Sei $\Omega$ endlich und  p die gleichverteilt auf $\Omega$. Dann ist die Wkt. von einem Ereignis $A\subset \Omega$ genau:
+			\[\mathbb{P}(A)=\frac{|A|}{|\Omega|}\].\\
+			\Bem{
+				Eine Strategie zur Modellierung ist es, den Ergebnisraum soweit zu verfeinern, bis man eine Gleichverteilung annehmen kann. Danach können Wkt.en durch Zählen bestimmt werden.
+			}
+		}
+		\Bsp{
+			Sei ein Würfel gegeben, der statt einer 6 zwei 1en hat. Was ist die Wkt. von einem Ergebnis $\leq 3$? \qquad \\Modelle:
+		}{
+			\bspe{
+				\item  $\Omega = \{1,2,3,4,5\}, \quad p(x)= \frac{1}{5}$ (Gleichvert.)\\
+				\[\mathbb{P}(\{1,2,3\})=\frac{3}{5}\]\\
+				$\implies$ schlechtes Modell, 1en sollten doppelt so wahrscheinlich wie andere Zahlen sein
+				
+				\item $\Omega = \{1,2,3,4,5\}, \quad p(1) = \frac{2}{6}=\frac{1}{3}, \quad p(x)= \frac{1}{6}$ für $x \geq 1$\\
+				\[\mathbb{P}(\{1,2,3\})=\frac{4}{6}=\frac{2}{3}\]
+				
+				\item $\Omega=\{1_a,1_b,2,3,4,5\}$,\qquad
+				$p(x)=\frac{1}{6}$, (Gleichvert. wg. Symmetrie des Würfels)\\
+				\[\mathbb{P}(\{1_a,1_b,2,3\})=\frac{4}{6}=\frac{2}{3}\]
+			}
+			Modelle b) und c) sind verschieden, aber liefern beide das Ergebnis $\frac{2}{3}$. Beides sind gute Modelle.\\
+			Modell a) liefert $\frac{3}{5}$. Das Ergebnis ist ''richtig'' in dem Sinne, dass die Wkt. bzgl. Modell a)  korrekt berechnet wurde. \\
+			Modell a) ist aber ein schlechtes Modell, da es fälschlicher Weise von einer Symmetrie der Ergebnisse 1,2,3,4,5 ausgeht.
+		}
+
+		\newpage
+		%#######################################################################################################################################################
+		\subsubsection{Zählen und Kombinatorik} 
+		
+		In der Kombinatorik unterscheidet man zwischen geordneten und ungeordneten Mengen
+		
+		\Bsp{
+			Teilmengen:
+		}{
+			\punkte{
+				\item Geordnete Teilmengen von $\{1,2,3\}$ der Größe 2:
+				 \[(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)\] 
+				\item ungeordneten Teilmengen von $\{1,2,3\}$ der Größe 2: 
+				\[\{1,2\},\{1,3\},\{2,3\}\]
+			}
+		}
+	
+		\Satz[(Kombinatorisches Zählen)]{
+			Sei S endlich, $|S|=n$:
+			\bspe{
+				\item Dei Anzahl der Folgen der Länge k mit den n Symbolen aus S ist $n^k$
+				\item Die Anzahl der geordneten Teilmengen von S der Länge $k \leq n$ ist
+					\[n\cdot (n-1)(n-2)(n-3)... (n-k +1)= \frac{n!}{(n-k)!}\]\\
+					Insbesondere hat S genau $n!$ viele verschiedene Reihenfolgen.
+				\item Die Anzahl der ungeordneten Teilmengen von S der Länge $K \leq n$ ist 
+					\[\binom{n}{k}= \frac{n\cdot (n-1)... (n-k+1)}{k!}=\frac{n!}{(n-k)!\cdot k!}\]\\
+				}
+			\Bew{
+				\bspe{
+					\item Für das erste Element hat man n Möglichkeiten, für das zweite ebenfalls, als $n^2$ viele für die ersten beiden. Fortsetzten ergibt $n^k$
+					\item Für das erste Element hat man n Möglichkeiten, für das zweite noch $(n-1)$, das dritte nur noch $(n-2)$, usw., da das gleiche Element aus S nicht mehrmals gewählt werden kann.\\
+					Damit ergibt sich für k Elemente\\
+						\[n(n-1)(n-2)(n-3) . . . (n-k+1)\]
+						viele Möglichkeiten.
+					\item Sei $A \subset S \quad(\text{ungeord. falls nicht spezifiziert}), \qquad |A|=k$\\
+					Nach b) gibt es $k!$ viele Möglichkeiten A zu sortieren. Folglich taucht A in all den verschiedenen Reihenfolgen $k!$ mal in der Menge der geordneten Teilmenge der Länge $k$ auf. Da die für jedes solche A gilt muss die Menge der geordneten Teilmengen $k!$ mal größer sein als die Menge der ungeordneten Teilmengen. Mit b) ist also die Anzahl der ungeordneten Teilmengen der Länge $k$ genau 
+						\[\frac{n!}{(n-k)!}/k!= \frac{n!}{(n-k)!\cdot k!} \]
+					}
+				}
+		}	
+		\Bsp[(Urnenmodelle)]{
+			Sei eine Urne mit 8 nummerierten Kugeln gegeben. Ansonsten sind die Kugeln identisch. Man zieht blind eine Kugel
+		}{
+			\bspe{
+				\item \textbf{Ziehen mit Zurücklegen:} Ziehen Kugel, notieren die Zahl, legen die Kugel zurück. Dies wiederholen wir 2 mal. 
+					\\Wkts.modell: 
+					\[\qquad S =\{1,2,3,4,5,6,7,8\}\]\\
+					\[\Omega = S^3= \{(x_1,x_2,x_3) \quad : \quad x_i \in S, \quad i=1,2,3\} \text{(nicht geord. TM)}\]\\
+					\[p(x)=\frac{1}{|\Omega|} = \frac{1}{8^3}=\frac{1}{512} \qquad \text{(Gleichverteilung)}\]\\
+					Was ist die Wkt., dass die Summe 4 ist?\\
+					Das Ergebnis :\[A:= \{(x_1,x_2,x_3)\in \Omega \quad : \quad x_1 + x_2 + x_3 = 4\}=\{(1,1,2),(1,2,1),(2,1,1)\}\]\\
+					beschreibt die Möglichkeiten mit den 3 Zahlen in der Summe 4 zu erhalten. Also ist die Wkt. (in diesm Modell).\\
+					\[\mathbb{P}(A)=\frac{|A|}{|\Omega|}=\frac{3}{512} \approx 0,006\]
+				\item \textbf{Ziehen ohne Zurücklegen:} Ziehe Kugel, notiere Zahl, legen Kugel beiseite, 2 mal wiederholen\\
+					\begin{enumerate}[label=Fall \arabic*)]
+						\item Mit Beachung der Reihenfolge\\
+							$\Omega=\{(x_1,x_2,x_3)\qquad$ geordnete Teilmenge von S der Länge 3$\}$\\
+							\[p(x)=\frac{1}{|\Omega|}=\frac{1}{8\cdot 7\cdot 6}= \frac{1}{336} \quad \text{Gleichverteilung}\]
+						\item Ohne Betrachtung der Reihenfolge\\
+							$\Omega= \{\{x_1,x_2,x_3\}\in 2^S\}$\\
+							\[p(x)=\frac{1}{|\Omega|}= \frac{1}{\binom{8}{3}}= \frac{1}{56}\]	
+					\end{enumerate}
+				}
+			}
+
+		
+		\newpage
+		%###################################################################################################################################################
+		\subsubsection{Eigenschaften von Wkts verteilungen/-maßen}
+		
+		In diesem Abschnitt seien $(\Omega, \Pp)$ Wkts.modell gegeben\\
+		 $\lbrack$Erinnerung: Wir können ein Wkts.modell (oder Wkt. raum) durch die Wkts.verteilung $\Pp$ oder Wkts.funktion p bestimmen$\rbrack$
+		 
+		\Def{
+			Ereignisse $A_1, A_2, ...$ heißen paarweise disjunkt, falls $A_i \cap A_j = \emptyset$ ist für alle $i\not = j$
+		}
+		\Prop[(Eigenschaften von Wkts.verteilungen)]{
+			\bspe{
+				\item \[\Pp[\emptyset]=0,\qquad \Pp[\Omega]=1\]
+				\item Seien $A_1,A_2,...,A_n$ paarweise disjunkt. Dann ist \[\Pp[ \bigcup\limits_{i=1}^{n} A_i] = \summe{i=1}{n}{\Pp[A_i]} \]
+				\item Seien $A_1,A_2,...$ paarweise disjunkt. Dann ist 
+					\[\Pp[ \bigcup\limits_{i=1}^{\infty} A_i] = \summe{i=1}{\infty}{\Pp[A_i]} \]
+				\item \[\Pp[A^C] = 1- \Pp[A] \]\\
+				\item Wenn $A\subset B$, dann ist $\Pp[A]\leq \Pp[B]$. Genauer:
+					\[\Pp[B]= \Pp[A] + \Pp[B\backslash A] \]
+				\item \[\Pp[A\cup B]= \Pp[A] + \Pp[B] - \Pp[A\cap B] \]	
+				
+					\Bew{
+						\bspe{
+							\item \[\Pp[\Omega]= \summe{\omega \in \Omega}{}{p(\omega)}=1, \qquad \text{nach Def. von p} \] 
+								\[\Pp[\emptyset]= \summe{\omega \in  \emptyset}{}{p(\omega)}=0, \qquad \text{da die Summe leer ist} \]
+							\item \[\Pp[\verein{i=1}{n}{A_i}]= \summe{\omega \in \verein{i=1}{n}{A_i}}{}{p(\omega)}= \summe{\omega \in A_1}{}{p(\omega)} + \summe{\omega \in A_2}{}{p(\omega)} + ... + \summe{\omega \in A_n}{}{p(\omega)}\]
+							\item \[\Pp[\verein{i=1}{\infty}{A_i}]= \summe{\omega \in \verein{i=1}{\infty}{A_i}}{}{p(\omega)}= \summe{\omega \in A_1}{}{p(\omega)} + \summe{\omega \in A_2}{}{p(\omega)} + ... \]
+							\item $A$ und $A^C$ sind disjunkt. Daher \[1 \overset{a)}{=} \Pp[\Omega] = \Pp[A \cup A^C] \overset{b)}{=} \Pp[A] + \Pp[A^C] \]
+							\item Da nach definition gilt: \quad $B = A \cup B\backslash A $ 
+								\[\Pp[B]= \summe{\omega \in A}{}{p(\omega)} + \summe{\omega\in B\backslash A}{}{p(\omega)} = \Pp[A] + \Pp[B\backslash A]\]
+							\item \begin{align*}
+									\Pp[A\cup B] &= \summe{\omega \in A \cup B}{}{p(\omega)}\\
+									&= \summe{\omega \in A}{}{p(\omega)} + \summe{\omega \in B}{}{p(\omega)} - \summe{\omega \in A\cap B}{}{p(\omega)} \\
+									&= \Pp[A\cup B]= \Pp[A] + \Pp[B] - \Pp[A\cap B]
+								\end{align*}
+						}
+					}
+			}
+		}
+			
+		\Prop{
+			Wir können verschiedene Ereignisse durch Mengenoperationen verknüpfen: 
+			\bspe{
+				\item A oder B tritt ein $\widehat{=} \quad A \cup B$
+				\item A und B tritt ein $\widehat{=} \quad A \cap B$
+				\item A tritt nicht ein $\widehat{=} \quad A^C = \Omega \backslash A$}
+		
+				\Bew{
+					\bspe{
+						\item A oder B tritt ein \[\widehat{=} \{\omega \in \Omega : \omega \in A \text{ oder } \omega \in B  \} =\{ \omega \in \Omega : \omega \in A\cup B\} = A \cup B\]
+						\item A und B tritt ein \[\widehat{=} \{\omega \in \Omega : \omega \in A \text{ und } \omega \in B  \} =\{ \omega \in \Omega : \omega \in A\cap B\} = A \cap B\]
+						\item A tritt nicht ein \[\widehat{=} \{\omega \in \Omega: \omega \not \in A \}= \Omega\backslash A= A^C \]
+					}
+				}
+		}
+\newpage
+	%###################################################################################################################################################
+\subsubsection{Bedingte Wahrscheinlichkeit}
+
+\Bsp{
+	\bspe{
+		\item Wir werfen eine Münze zwei mal. Sei $K_1$ bzw $K_2$ das Ereignis, dass der erste bzw. zweite Wurf Kopf zeigt.\\ z.B.: 
+			\begin{align*}
+				\Omega &= \{KK,KZ,ZK,ZZ\}\\ 
+				K_1 &= \{KK,KZ \}\\
+				 K_2 &= \{ KK, ZK\}
+			\end{align*}
+			Das Eintreten von $K_1$ sollte keinen Einfluss darauf haben, dass $K_2$ eintritt oder nicht eintritt. Wir glauben, dass $K_1$ und $K_2$ unabhängig (voneinander) sind.
+		\item Wir werfen einen Würfel. Sei $A_3$ das Ereignis, dass das Ergebnis 3 ist. Sei $A_{\leq 4}$ das Ereignis, dass das Ergebnis kleiner gleich 4 ist.\\
+			z.B.:
+			\begin{align*}
+				\Omega &= \{1,2,3,4,5,6\}\\
+				A_3&=\{3\}\\
+				A_{\leq 4} &= \{1,2,3,4\}
+			\end{align*}
+			In diesem Fall sind die Ereignisse klar voneinander abhängig:\\
+			
+		\begin{tikzpicture}[level distance=1.1cm,
+			level 1/.style={sibling distance=8cm},
+			level 2/.style={sibling distance=5.5cm}]
+			\node {$A_{\leq 4}$} child{node{tritt ein} child{node{\text{3 eines von 4 mgl. Erg.}} child{node{}}} } child{node{tritt nicht ein} child{node{3 als Erg. unmgl.} child{node{}}}};
+		\end{tikzpicture}
+		\quad Wkt. von $A_3$, gegeben \qquad \qquad\qquad\qquad\qquad Wkt. von $A_3$ gegeben,\\
+		dass $A_{\leq 4}$ eintritt, ist $\frac{1}{4}$? \qquad\qquad\qquad\qquad dass $A_{\leq 4}$ nicht eintritt ist 0?
+	}
+}{}
+
+\Block[Empirische Notation:]{
+	Nehmen wir an, wir haben zwei beobachtbare Größer, z.B. infiziert / nicht infiziert und Test positiv / negativ.\\
+	Uns interessiert die falsch-negativ Rate des Tests, d.h. die Wkt., dass der Test negativ ist, gegeben, dass die Person infiziert ist.\\
+	Ereignisse: $I \widehat{=}$ infiziert, \qquad $N\widehat{=}$ Test negativ\\
+	Mit n Wiederholungen können wir zählen:\\
+	$n_I := \#$ infiziert\\
+	$n_{I\cap N} := \#$ infiziert und Test negativ\\\\
+	empirische falsch-negativ Rate $= \frac{n_{I\cap N}}{n_I}$
+	\[= \frac{\frac{n_{I\cap N}}{n}}{\frac{n_I}{n}} \approx \frac{\Pp[I\cap N]}{\Pp[I]} \]
+}
+
+\Def[(Bedingte Wahrscheinlichkeit)]{
+	Sei $\Omega, \Pp$ ein Wkts.modell und $A,B \subset \Omega$ Ereignisse mit $\Pp[B]>0$.\\ Dann ist die bedingte Wkt. von $A$ gegeben $B$ definiert als: 
+	\[ \Pp[A|B]:= \frac{\Pp[A\cap B]}{\Pp[B]}\]
+}
+
+\Bsp[(Fortsetztung des Würfelspiels)]{
+	Die bedingte Wkt. von $A_3$ gegeben $A_{\leq 4}$ ist: \[\Pp[A_3 | A_{\leq 4}] = \frac{\Pp[A_3 \cap A_{\leq 4}]}{\Pp[A_{\leq 4}]} = \frac{\Pp[\{3\}]}{\Pp[\{1,2,3,4\}]}=\frac{\frac{1}{6}}{\frac{4}{6}}= \frac{1}{4} \]
+}{}
+
+\Bsp[(Fortsetztung Münzwürfe)]{
+	Die bedingte Wkt. von $K_2$ gegeben $K_1$ ist: 
+	\[\Pp[K_2| K_1]= \frac{\Pp[K_2 \cap K_1]}{\Pp[K_1]} = \frac{\Pp[\{KK\}]}{\Pp[\{KZ,KK\}]} = \frac{\frac{1}{4}}{\frac{2}{4}}= \frac{1}{2}=\Pp[K_2]\]
+}{
+	\\Sei nun $M$ das Ereignis, dass mindestens eine Münze Kopf zeigt, also $M=\{KK,KZ,ZK\}$. \\
+	 Wkt., dass der zweite Wurf Kopf zeigt, gegeben M? 
+ 	\[\Pp[K_2| M]= \frac{\Pp[K_1 \cap M]}{\Pp[M]}= \frac{\Pp[\{KK,KZ\}]}{\Pp[\{KK,KZ,ZK\}]}= \frac{\frac{2}{4}}{\frac{3}{4}}= \frac{2}{3} \]
+}
+
+\Bsp[(Geschwister)]{
+	Situation: Wir untersuchen Familien mit 2 Kindern\\
+	Annahmen: 
+		\punkte{
+			\item Junge/Mädchen sind gleich wahrscheinlich 
+			\item Die Geschlechter der Kinder sind unabhängig voneinander
+		}
+	Frage: Gegeben, dass eine Familie mindestens ein Mädchen hat, was ist die Wkt., dass das andere Kind auch ein Mädchen ist?\\
+	Wkts.modell: 
+		\[\Omega := \{mm,mj,jm,jj\} \] $p$ 
+		Gleichverteilung \qquad (Mädchen/Junge wie Münzwurf )\\\\
+		Ereignisse:\\
+		$M_{\geq 1}= \{mm,mj,jm\}$\\ $M_{\geq 2} = \{mm\}$ 
+		\[\Pp[ M_{\geq 2}| M_{\geq 1}] = \frac{\Pp[M_{\geq 2} \cap M_{\geq 1}]}{\Pp[M_{\geq 1}]} = \frac{\Pp[\{mm\}]}{\Pp[\{mm,mj,jm\}]} =\frac{1}{3} \] 
+		Jetzt besuchen wir einen Familie mit mindestens einem Mädchen  und klingeln an der Tür. Ein Mädchen macht auf. Was ist die Wkt., dass das andere Kind ein Mädchen ist?\\
+		Modell: 
+		\[ \Omega = \{m'm, mm', m'j, mj', j'm, jm',j'j, jj' \}\]
+		p Gleichverteilung (welches Kind die Tür öffnet ist unabh. von Rest und zufällig)\\
+		$M_{\geq 1}= \{m'm,mm',m'j,mj',j'm, jm'\}$\\$M_{\geq 1}' = \{m'm, mm', m'j, jm' \}$ 
+		\[ \Pp[M_{\geq 2} | M_{\geq 1}'] =\frac{\Pp[M_{\geq 2} \cap M_{\geq 1}']}{\Pp[M_{\geq 1}' ]} = \frac{\Pp[\{ m'm, mm'\}]}{\Pp[\{m'm, mm', m'j, jm'\}]} = \frac{\frac{2}{8}}{\frac{4}{8}} = \frac{1}{2} \]
+}{}
+
+\Def{
+	Eine abzählbare Folge von Ereignissen $B_1,B_2,...$ ist eine Partition von $\Omega$, falls für die $B_1,B_2,...$ paarweise disjunktheit und  $\verein{i}{}{B_i}=\Omega$ gilt.
+
+	\Bem{
+		Die Folge $B_1,B_2,...$ kann endlich oder abzählbar unendlich sein. Der einfachste Fall ist $B_1=B, B_2=B^C=\Omega\backslash B$
+	}
+}
+
+\Satz[(Satz der totalen Wkt.)]{
+	Seien A,B Ereignisse mit $\Pp[B]>0$. Dann ist 
+	\[\Pp[A]=\Pp[A|B]\cdot \Pp[B] + \Pp[A| B^C]\cdot \Pp[B^C] \]
+	Allgemeiner, sei $B_1,B_2, ...$ eine Partition von $\Omega$ mit $\Pp[B_i]>0 \quad \forall i$. Dann ist 
+	\[\Pp[A]=\summe{i}{}{\Pp[A|B_i]\cdot \Pp[B_i]}\]
+	\Bew{
+		Sei $A_i=A\cap B_i,\qquad A_1,A_2,...$ sind paarweise disjunkt, da die $B_1,B_2,...$ eine Partition sind. Außerdem ist $\verein{i}{}{A_i}=A$ \[\Pp[A]=\Pp[\verein{i}{}{A_i}]\overset{Prop. 9}{=}\summe{i}{}{\Pp[A_i]}\]
+		Nach der Def. der bedingten Wkt ist
+		\[\Pp[A|B_i]=\frac{\Pp[A \cap B_i]}{\Pp[B_i]}= \frac{\Pp[A_i]}{\Pp[B_i]} \]\\
+		\[\implies \Pp[A_i]=\Pp[A|B_i]\cdot \Pp[B_i]\]
+	}
+}
+
+\Satz[\hypertarget{bayes}{(Satz von Bayes)}]{
+	Seien $A,B$ Ereignisse mit $\Pp[A], \Pp[B]>0$. \\Dann ist 
+	\[\Pp[B|A]=\Pp[A|B] \cdot \frac{\Pp[B]}{\Pp[A]} \] 
+	\Bew{
+		\[\frac{\Pp[B|A]\cdot \Pp[A]}{\Pp[A]}=\frac{\Pp[B\cap A]}{\Pp[A]} = \Pp[A|B]\cdot \frac{\Pp[B]}{\Pp[A]} \] 
+	}
+	\Bem{
+		Der Satz von Bayes ist sehr wichtig für viele Anwendungen und kann Ergebnisse liefern, die auf den ersten Blick der Intuition widersprechen.
+	}
+}
+
+\newpage
+	%###################################################################################################################################################
+\subsubsection{Unabhängigkeit und Produktverteilung}
+
+\Def[(Unabhängigkeit)]{
+	Zwei Ereignisse $A,B$ heißen unabhängig, falls  \[ \Pp[A\cap B]= \Pp[A]\cdot \Pp[B] \]
+	\Bem{
+		Gilt im allgemeinen \textbf{nicht} für alle Ereignisse!!!
+	}
+	\Bsp[(Münzwürfe)]{
+		\wktsmod{
+			$\Omega=\{KK,KZ,ZK,ZZ\},\quad p(\omega)=\frac{1}{4}, \quad \omega\in \Omega, \quad K_1=\{KK,KZ\},\quad K_2=\{ZK,KK\}$
+		}{
+			$\Pp[K_1\cap K_2]= \Pp[\{KK\}]=\frac{1}{4}\\ \Pp[K_1]\cdot \Pp[K_2]=\frac{1}{2}\cdot \frac{1}{2}=\frac{1}{4}$
+		}
+	}{}
+	\Bem{
+		Falls $\Pp[B] > 0$, so sind A und B unabh. gdw. $\Pp[A | B]=\Pp[A]$
+	}
+}
+ 
+\Def[(Produktverteilung)]{
+	Seien $(\Omega_1,p_1),...,(\Omega_n,p_n)$ Wkts.modelle. Sei $\bar{\Omega}= \Omega_1 * ... * \Omega_n=\{(\omega_1,...,\omega_n): \omega_i \in \Omega_i\}$\\
+	Dann heißt $\bar{p}:\bar{\Omega} \rightarrow [0,1], \quad \bar{p}((\omega_1,...,\omega_n))=\prod\limits_{i=1}^{n} p_i(\omega_i)$\\
+	Produktverteilungsfunktion und $(\bar{\Omega},\bar{p})$ Produktraum oder Produktmodell.
+}
+
+\Prop[(Produktverteilung)]{
+	Sei $(\bar{\Omega},\bar{p})$ das Produktmodell von $(\Omega_i,p_i), \quad i=1,...,n$. \\Seien $\bar{A}_1,...,\bar{A}_n$ Ereignisse in $\bar{\Omega}$, die jeweils nur von der i-ten Koordinate abhängen, d.h. 
+	\[\bar{A}_i = \{(\omega_1,...,\omega_n)\in \bar{\Omega} : \quad \omega_i\in A_i\}\] 
+	für ein $A_i \subset \Omega_i$.\\
+	Dann sind $\bar{A_1},...,\bar{A_n}$ unabhängig. 
+	\Bsp[(n unfaire Münzwürfe)]{
+		Sei $\Omega_i=\{0,1\},\quad p_i(1)=\alpha,\quad p_i(0)=1-\alpha$ das Modell für einen einfachen Münzwurf mit Parameter $\alpha$.\\
+		Dann beschreibt das Produktmodell $(\bar{\Omega}, \bar{p})$ von $(\Omega_1,p_1),...,(\Omega_n,p_n)\quad $\\
+		n identische Münzwürfe, die unabhängig voneinander mit Wkt. $\quad \alpha\quad $ 1 (Kopf) zeigen.\\
+		Sei $\Pp$ die Wkt.verteilung von $\bar{p}$ und $B_k$ das Ereignis, dass genau $k$ Münzen Kopf zeigen. Was ist $\Pp[B_k]$?
+	}{}
+}
+ 
+\Lemma{
+	\[\Pp[B_k]= \binom{n}{k} \alpha^k (1-\alpha)^{n-k} \]
+	\Bew{
+		Sei $\bar{\omega}= (\omega_1,...,\omega_n)\in B_k$. 
+		\[\bar{p}(\bar{\omega}) = \prod\limits_{i=1}^{n} p_i (\omega_i)= \alpha^k (1-\alpha)^{n-k} \]
+		$\implies \Pp[B_k]=\summe{\bar{\omega} \in B_k}{}{\bar{p}(\bar{\omega})}= |B_k|\alpha^k (1-\alpha)^{n-k}$\\
+		Beh.: $|B_k|= \binom{n}{k}$ nach Satz 7.c). Zu jedem $\bar{\omega}\in B_k$ gehört genau eine Teilmenge $\{j\in \{1,...,n\}: \omega_j=1 \}\subseteq \{1,...,n\}$. \\
+		Diese Teilmenge hat genau k Elemente. Umgekehrt bildet jede solche Menge einen Vektor $\bar{\omega}$, bei dem genau diese Koordinate 1 sind.\\
+		Nach Prop. 7 c)  gibt es genau $\binom{n}{k}$ ungeordnete Teilmengen von $\{1,...,n\}$ mit k Elementen 
+	}
+	\Anw{
+		\item Wahlen/-prognosen 
+		\item Medizinische Tests im Labor 
+		\item Produktionsmaschinen
+	}
+}
+
+\Def{
+	Sei $n\in \mathbb{N}$ und $\alpha\in [0,1]$ gegeben. Dann bilden $\Omega= \{1,...,n\}$ und Wkts.funktion $p(k)= \binom{n}{k}\alpha^k (1-\alpha)^{n-k}$ die Binomialverteilung mit n Versuchen und Erfolgswkt. $\alpha$.\\
+	Die Binomialverteilung zählt die Anzahl von ''Erfolgen'', wenn man n Versuche hat und in jedem unabhängig Erfolgswkt. $\alpha$.
+	\Anw{
+		\item Eine Maschine produziert am Tag 1000 Teile, davon sind normaler Weise $1\%$ defekt. \\
+		$\implies$ Binomialverteilung mit $n=1000, \quad \alpha=0,01$. \\
+		$\implies$ benutzen, um Maschinendefekt/Fehlkallibrierung festzustellen.\\
+		Betrachte zum Beispiel Ereignis, dass es mehr als 15 Defekte Teile gibt. 
+		\[\Pp[A]\approx (\text{Ergebnis aus Tabelle, Bin.vert.rechner im Internet, Matlab,...}) \]
+	} 
+}
+
+\Satz[\hypertarget{gdgz1}{(Gesetz der großen Zahlen (erste Version))}]{
+	Sei $\Omega_n=\{0,1\}^{n}$ mit Produktverteilung $\Pp_n$ (bzw. Produktverteilungsfunktion $\bar{p}_n$) zu Parameter $\alpha$ wie oben. \\
+	 Sei 
+	 \[A_{n,\epsilon} = \{\omega\in\Omega_n : | \alpha -\frac{1}{n}\summe{i=1}{n}{\omega_i}|\leq \epsilon \} \]
+	 das Ereignis, dass die zufällige Frequenz der 1-Ergebnisse nun nicht mehr als $\epsilon$ von $\alpha$ abweicht.\\
+	 Dann gilt
+	 \[\lim\limits_{n \rightarrow \infty} \Pp_n(A_{n,\epsilon})=1 \qquad \text{für alle } \epsilon > 0\] 
+ }
+
+\newpage
+	%###################################################################################################################################################
+\subsection{Zufallsvariablen}\stepcounter{Section}
+
+\subsubsection{Definitionen}
+
+\Bsp[(n Würfelwürfe)]{
+	$(\Omega, p)$ Produktmodell von n einfachen Würfelwürfen ($\Omega_i = \{1,2,...,6\},\quad p_i$ gleichvert. $\implies \Omega=\{1,...,6\}^n, p(\omega)=\frac{1}{6^n}\quad \forall \omega\in \Omega$\\
+	Sei $X_i : \Omega \rightarrow \mathbb{R},\quad X_i((\omega_1,...,\omega_n))=\omega_i\quad $ das Ergebnis des i-ten Würfelwurfs.\\
+	Summe der Würfel: 
+	\[S:\Omega \rightarrow \mathbb{R},\qquad S=\summe{i=1}{n}{X_i}\] 
+	Ergebnis, dass die ersten 3 Würfel eine 6 zeigen: 
+	\[ B=\{\omega \in \Omega: X_1(\omega) = X_2(\omega)=X_3(\omega) =6 \}.\]
+}{}
+
+\Def[(Zufallsvariablen)]{
+	Sei $(\Omega,p)$ ein diskretes Wkts.-modell/-raum. Eine Abbildung 
+	\[X:\Omega \rightarrow \mathbb{R}\] 
+	heißt Zufallsvariable.
+	\Block[Konventionen:]{
+		\punkte{
+			\item Für Zufallsvariablen benutzten wir Großbuchstaben
+			\item Für Ereignisse $\{\omega \in \Omega: X(\omega) = x \}, \quad  \{\omega \in \Omega: X(\omega) \geq x \}, . . .\quad $ schreiben wir verkürzend: 
+			\[\quad \{X=x\},\quad \{X\geq x\},...\]
+			\item Für Wkten lassen wir oft Mengenklammern weg, also \[\Pp[X=x],\quad \Pp[X\geq x],...\]
+		}
+	}
+	\Block[Typische Zufallsvariablen:]{
+		\punkte{
+		\item Die Größe, die uns letztlich interessiert (Summe der Würfel, die Regenmenge von Morgen, der Sieger der US-Präsidentschaftswahl)
+		\item Bausteine, die mir als Zwischenschritte benötigen (Ergebnisse der einzelnen Würfel, Wolkendichte in Gewitterzellen einer Wettersimulation, Sieger in den einzelnen Bundesstaaten)
+		}
+	}{}
+	\Block[Rechenregeln]{
+		Seien $X,Y$ Z.Var auf einem Wkts.raum $(\Omega,p)$. Dann sind auch Z.Var:
+		\punkte{
+		\item \[ Z=X+Y,\qquad \text{d.h.}\quad Z(\omega)=X(\omega)+Y(\omega)\]
+			\[(Z=X\cdot Y, Z=X-Y, Z= min(X,Y), ...)\]
+		\item \[Z=g(X), \qquad \text{d.h.} \quad Z(\omega)= g(X(\omega))\quad \text{für } g: \mathbb{R} \rightarrow \mathbb{R} \]
+			\[Z=g(X,Y), \qquad \text{d.h.} \quad Z(\omega)= g(X(\omega), Y(\omega))\quad \text{für } g: \mathbb{R} \rightarrow \mathbb{R} \]
+			usw.
+		}
+	}{}
+}
+
+\Lemma{
+	Eine Z.Var. $X:\Omega \rightarrow \mathbb{R}$ auf einer abzählbaren Ergebnismenge $\Omega$ nimmt höchstens abzählbar viele verschiedene Werte an. Ihr Wertebereich
+	\[X(\Omega):=\{X(\omega ): \omega\in \Omega\} \quad \text{ist abzählbar.}\]
+}
+
+\Def{
+	Die Wkts.funktion einer Z.Var. $X$ auf $(\Omega, \Pp)$ ist 
+	\[p_X: X(\Omega)\rightarrow [0,1],\quad p_X(x)=\Pp[X=x]. \qquad \quad (=\Pp[\{\omega\in\Omega: X(\omega)=x\}]) \] 
+	Wir sagen eine Z.Var. ist gleichverteilt (binomialverteilt, ...) falls ihre Wkts.funktion $p_X$ eine Gleichverteilung (Binomialverteilung, ...) ist.
+}
+
+\Def{
+	Sei $A$ ein Ereignis in $\Omega$. Die Z.Var. 
+	\[\mathds{1}_A(\omega) := \left\{
+		\begin{array}{ll}
+			1,&\omega \in A \\
+			0, & \omega \not \in A \\
+		\end{array}
+	\right.  \]
+	\Bem{
+		Für $A,B$ Ereignisse gilt: 
+		\[\mathds{1}_{A\cap B}=\mathds{1}_A \cdot \mathds{1}_B \] 
+		\[ \mathds{1}_{A\cup B} \leq \mathds{1}_A + \mathds{1}_B\]
+	}
+}
+
+\Def{
+	Z.Var. $X_1,...,X_n$ auf einem Wkts.raum/-modell $(\Omega,\Pp)$ heißen unabhängig, falls die Ereignisse $\{X_1=x_1\},...,\{X_n=x_n\}$ unabhängig sind für $\forall x_i \in X_i(\Omega), \quad i=1,...,n$ \\
+	 $\implies \quad X,Y $ unabh., falls $\Pp[X=x,Y=y]= \Pp[X=x]\cdot \Pp[Y=y]$ für alle x,y gilt. 
+}
+
+\Prop{
+	Seien $(\Omega,\Pp)$ und $(\Omega',\Pp')$ Wkts.räume mit unabh. Z.Var. $X_1,...,X_n$ auf $\Omega$, bzw. $X_1',...,X_n' $ auf $\Omega'$.\\
+	Wenn $X_i$ die gleiche Verteilung wie $X_i'$ hat $\forall i$ (d.h. $p_{X_i}=p_{X_i'}\quad \forall i$), dann gilt
+	\[\Pp[f(X_1,...,X_n)=y]=\Pp'(f(X_1',...,X_n')=y)\quad \forall f:\mathbb{R}^n\rightarrow \mathbb{R} \text{ und alle } y\] 
+	D.h. die Z.Var $(X_1,...,X_n)$ und $(X_1',...,X_n')$ beschreiben das gleiche Modell, auch wenn die Wkts.räume unterschiedlich sind.\\
+	$\rightarrowtail$ Es reicht, die Verteilung/Wkts.funktionen der unabhängigen Z.Var anzugeben, die man als Bausteine benutzt. Den Wkts.raum $(\Omega,\Pp)$ muss man dann nicht genauer spezifizieren.
+}
+
+\newpage
+	%###################################################################################################################################################
+\subsubsection{Mehrstufige Experimente und Entscheidungsbäume}
+
+\Bsp{
+	\begin{tikzpicture}[grow=right, sloped]
+		\node[bag] {$\circ$ }
+		child {
+			node[bag] {$\circ $}        
+			child {
+				node[end, label=right:
+				{$P(X=8)=\frac{1}{3}\cdot\frac{1}{3}=\frac{1}{9}$}] {}
+				edge from parent
+				node[below]  {$\frac{1}{3}$}
+			}
+			child {
+				node[end, label=right:
+				{$P(X=7)=\frac{1}{3}\cdot\frac{1}{6}=\frac{1}{18}$}] {}
+				edge from parent
+				node[below]  {$\frac{1}{6}$}
+			}
+			child {
+				node[end, label=right:
+				{$P(X=6)=\frac{1}{3}\cdot\frac{1}{2}=\frac{1}{6}$}] {}
+				edge from parent
+				node[below]  {$\frac{1}{2}$}
+			}
+			edge from parent 
+			node[below]  {$\frac{1}{3}$}
+			}
+	child {
+		node[end, label=right:
+		{$P(X=3)=\frac{1}{3}$}] {}
+		edge from parent
+		node[below]  {$\frac{1}{3}$}
+	}
+		child {
+			node[bag] {$\circ$}        
+			child {
+				node[bag] {$\circ$}       
+					child {
+						node[end, label=right:
+						{$(X=10)=\frac{1}{3}\cdot\frac{1}{10}\cdot \frac{1}{2}$}] {}
+						edge from parent
+						node[below]  {$\frac{1}{2}$}
+					}
+				child {
+					node[end, label=right:
+					{$(X=9)=\frac{1}{3}\cdot\frac{1}{10}\cdot \frac{1}{2}$}] {}
+					edge from parent
+					node[below]  {$\frac{1}{2}$}
+				}
+			edge from parent         
+			node[below]  {$\frac{1}{10}$}
+			}
+			child {
+				node[end, label=right:
+				{$P(X=4)=\frac{1}{3}\cdot\frac{9}{10}=\frac{3}{10}$}] {}
+				edge from parent
+				node[below]  {$\frac{9}{10}$}
+			}
+			edge from parent         
+			node[below]  {$\frac{1}{3}$}
+		};
+	\end{tikzpicture}
+}{
+	\\Sei ein endlicher Baum (mit Wurzel) gegeben, sowie Wkt.en an Kanten. Für jeden inneren Knoten müssen sich die Wk.ten zu den Kindern zu 1 summieren.
+	\punkte{
+		\item In jedem Schritt wählt man zufällig ein Kind nach den gegebenen Wkt.en, und wandert so den Baum hinab, bis man an ein Blatt kommt.
+		\item Das Endergebnis hängt davon ab in welchem Blatt man landet
+	} 
+}
+
+\Satz{
+	Sei die Spezifikation eines mehrstufigen Experiments gegeben, d.h. ein Baum (mit nummerierten Knoten und Wurzel 0) und Wkt.en $p_{ij}$ für Kanten $(i,j)$ mit 
+	\[\summe{j \text{ kind von } i}{}{p_{ij}}=1\]
+	Sei die Z.Var. $X$ der Index des zufälligen Blatts, in dem man landet. Dann gilt 
+	\[\Pp[X=x]=p_{0x_1} \cdot p_{x_1 x_2} \cdot ... \cdot p_{x_{n-1} x}, \quad \text{wobei  } 0 x_1 x_2 ... x_{n-1} x \text{ der Pfad von 0 nach x ist.}\]
+	\Bem{
+		(*) nennt man Pfadregel 
+	}
+	\Bew{
+		Die einzelnen Faktoren in der Pfadregel entsprechen den unabhängigen Entscheidungen in jedem Schritt.
+		\begin{align*}
+			\Pp[X=x]&=\Pp[\{0\rightarrow x_ 1 \} \cap \{x_1 \rightarrow x_2\} \cap ... \cap \{x_{n-1} \rightarrow x\} ]\\
+			 & \overset{\text{unabh.}}{=}\Pp[\{0\rightarrow x_ 1 \}] \cdot \Pp[\{x_1 \rightarrow x_2\}] \cdot ... \cdot \Pp[\{x_{n-1} \rightarrow x\}]\\
+			 & = p_{0x_1}\cdot p_{x_1 x_2} \cdot ... \cdot p_{x_{n-1} x}, 
+		\end{align*}
+		wobei $\{x_k \rightarrow x_{k+1}\}$ das Ereignis ist, dass wir in dem Schritt $k$ nach $x_{k+1}$ gehen, wenn wir in $x_k$ sind.
+	}
+}
+
+\Def{
+	Eine Z.Var $X$ mit Werten in $\{0,1\}$ und mit Wkts.funktion $p_X$ mit\\ $p_X(1)=\alpha,\quad p_X(0)=1-\alpha\quad $ heißt Benulli-verteilt mit Parameter $\alpha$.\\
+	$\rightarrow$ Fachbegriff für einen (unfairen) Münzwurf.
+	\Bsp{
+		Seien $X_1,...,X_n$ unabhängige Bernoulli-verteilte Z.Var.en mit Parameter $\alpha \in (0,1] $ auf einem Wkts.raum $(\Omega, \Pp)$
+	}{
+		\[S:= \summe{i=1}{n}{X_i } = \text{\#Erfolge} \qquad \text{ist Binomial (n,a) -verteilt}\] \\
+		\[Y:= \left\{
+			\begin{array}{ll}
+				min\{i\in\{1,...,n\}: X_i=1 \},& S>0 \\
+				\infty, & S=0 \\
+			\end{array}
+		\right.  \]
+		$= \#$Versuche bis zum ersten Erfolg\\
+		Verteilung/Wkts.funktion von Y? \quad $p_Y(k)= \Pp[Y=k]=?$\\\\
+		Alternative Betrachtungsweise als mehrstufiges Experiment:\\
+\begin{tikzpicture}[grow=right,scale=0.6,midway]
+	\node[bag] {$\circ$ }
+	child {
+		node[bag] {$\circ $}        
+		child {
+			node[bag] {$\circ $}  
+			child {
+				node[bag] {$.................$}
+				  child{				  	
+				  		node[bag]{$\circ$}
+					child {
+						node[end, label=right:
+						{$\infty$}] {}
+						edge from parent
+						node[below]  {$1 -\alpha$}
+					}
+					child {
+						node[end, label=right:
+						{$n$}] {}
+						edge from parent
+						node[below]  {$\alpha$}
+					}
+				[edge from parent/.style=midway]
+			}
+				edge from parent
+				node[below]  {$1 - \alpha$}
+			}
+			child {
+				node[end, label=right:
+				{$3$}] {}
+				edge from parent
+				node[below]  {$\alpha$}
+			}
+			edge from parent
+			node[below]  {$1 - \alpha$}
+		}
+		child {
+			node[end, label=right:
+			{$2$}] {}
+			edge from parent
+			node[below]  {$\alpha$}
+		}
+		edge from parent 
+		node[below]  {$1 -\alpha$}
+	}
+	child {
+		node[end, label=right:
+		{$1$}] {}
+		edge from parent
+		node[below]  {$\alpha$}
+	};
+\end{tikzpicture}\\
+	$X_i$ entscheidet, ob man in Stufe i nach links $X_i=1$ oder rechts $X_i=0$ läuft.
+	\[p_Y(k)= (1-\alpha)^{k-1}\cdot \alpha\qquad \text{für } \quad k\in \{1,...,n\}\]
+	\[p_Y(\infty)=(1-\alpha)^n \]
+	}
+}
+
+\Def{
+	Eine Z.Var $Y$ ist geometrisch verteilt mit Erfolgsparameter $\alpha\in (0,1]$, falls 
+	\[p_Y(k)= \alpha (1-\alpha)^{k-1}\qquad \text{ist,}\quad k\in \mathbb{N}\]
+	Die geometrische Verteilung zählt die Anzahl der Versuche bis zum ersten Erfolg in einer unendlich langen Folge von unabh. Bernoulli-Experimenten (Münzwürfe)
+	\Bem{
+		Manchmal zählen geometrische Vert. die Anzahl der Fehlversuche bis zum ersten Erfolg.
+	}
+	\Bem[(nicht prüfungsrelevant)]{
+		Eine unendliche Folge von 0-1-Bernoulli-Experimenten würde auf dem Ergebnisraum $\Omega = \{0,1\}^{\mathbb{N}}$ leben. Aber $\Omega$ ist nicht abzählbar und für $\alpha \in (0,1)$ ist 
+		\[p(\omega)= \alpha^{\#\text{1en in } \omega} \cdot (1-\alpha)^{\#\text{0en in } \omega}=0\] 
+		$\rightarrow$ Jedes mögliche Ergebnis hat Wkt. 0\\
+		$\rightarrow$ diskrete Wkts.theorie ist hier nicht gut genug
+		\punkte{
+			\item diskrete WT geht auf Laplace (1749-1827) zurück
+			\item moderne WT geht auf Kolmogorov (1933) zurück
+		}
+	}
+}
+
+\newpage
+	%###################################################################################################################################################
+\subsubsection{Erwartungswert und Varianz}
+
+In disem Abschnitt nehmen wir einen Wkts.raum $(\Omega, \Pp)$ als gegeben an
+
+\Def{
+	Der Erwartungswert einer Z.Var $X$ auf $\Omega$ ist definiert als 
+	\[\mathbb{E}(X):= \summe{x\in X(\Omega)}{}{x\cdot  \Pp[X=x]},\qquad \text{falls} \quad |X(\Omega)| < \infty\]
+	So wird zusätzlich gefordert, dass
+	\[\summe{x\in X(\Omega), x>0}{}{x\cdot\Pp[X=x] < \infty} \quad\qquad \qquad\qquad \qquad (1) \]
+	oder  
+	\[\summe{x\in X(\Omega), x<0}{}{x\cdot \Pp[X=x] > - \infty} \qquad \qquad\qquad \qquad (2)\]
+	ist.\\
+	\Bem{
+		\punkte{
+			\item Der Erwartungswert ist das durchschnittliche Ergebnis der Z.Var.
+			\item Der Erwartungswert kann $+\infty$ (bzw. $-\infty$) sein, falls nur (2) (bzw. nur (1)) gilt.\\ Meistens ist der Erwartungswert endlich.
+			\item der Erwartungswert von $X$ hängt nur von der Wkts.funktion $p_X$ ab: $\mathbb{E}(X)= \summe{x\in X(\Omega)}{}{x p_X(x)}$.
+		}
+	}
+	\Bsp{
+		Sei $X$ das Ergebnis eines Würfelwurfs 
+		\[\mathbb{E}(X)= \summe{x=1}{6}{x\cdot \underbrace{\Pp[X=x]}}_{=6} = \frac{1+2+...+6}{6}=3,5\]
+	}{}
+} 
+
+\Satz[(Rechenregeln)]{
+	Seien $X,Y$ Z.Var mit endlichen Erwartungswerten ((1) und (2) gelten), und $a,b\in \mathbb{R}$.\\
+	\bspe{
+		\item $\mathbb{E}(X+Y)=\mathbb{E}(X)+\mathbb{E}(Y)$
+		\item $\mathbb{E}(aX+b)= a \mathbb{E}(X)+b$
+		\item Für $g:\mathbb{R} \rightarrow \mathbb{R}$ mit $\mathbb{E}(g(X))$ endlich ist 
+			\[\mathbb{E}(g(X))= \summe{x\in X(\Omega)}{}{g(x)\cdot\Pp[X=x]}\]
+		} 
+	\Bsp[ (X wieder Würfelung)]{
+		Sei $Y=\underbrace{3\cdot X}_{\text{Auszahlung des Spiels}} -\underbrace{11}_{\text{Einsatz}}$
+	}{
+		\[\mathbb{E}(Y)=\mathbb{E}(3X-11)= 3 \mathbb{E}(X) - 11= 3 \cdot 3,5 -11 = -0,5\]
+	}
+	\Bsp[(Glücksspiel basierend auf Münzwurf)]{
+		Kopf: 11€ Gewinn, Zahl: 10€ Verlust\\
+		$\Omega=\{0,1\}$, $\Pp$ Gleichverteilung
+	}{
+		\[X(\omega)= \left\{
+			\begin{array}{ll}
+				11,& \omega=1 \\
+				-10, & \omega = 0 \\
+			\end{array}
+		\right.  \]\\ 
+	\[\mathbb{E}(X)=11 \cdot \Pp[X=11] -10 \cdot \Pp[X=-10]= 11 \cdot\frac{1}{2} - 10 \cdot \frac{1}{2}= 0.5 \]
+	Ein gelangweilter Millionär ändert die Regeln: \\
+	Kopf: 1001€ Gewinn,\quad Zahl: 1000€ Verlust 
+	\[ Y(\omega)=\left\{
+		\begin{array}{ll}
+			10^3 +1,& \omega=1 \\
+			-10^3, & \omega = 0 \\
+		\end{array}
+	\right. \]\\\[\mathbb{E}(Y)=...=0.5\]
+	}
+}
+
+\Def{
+	Sei $X$ eine Z.Var mit endlichem Erwartungswert $\mu$. Dann ist die \textbf{Varianz} von X definiert als 
+	\[ Var(X):= \mathbb{E}((X- \mu)^2)= \summe{x\in X(\Omega)}{}{(x-\mu)^2 \Pp[X=x]}\]
+	Die \textbf{Standardabweichung} $\sigma(X)$ ist definiert als 
+	\[ \sigma(X)=\sqrt{Var(X)} \]
+	\Bem{
+		\punkte{
+			\item Die Standardabweichung ist ein Maß dafür, wie weit eine Z.Var von ihrem Erwartungswert abweichen kann.
+			\item $Var(X)= \mathbb{E}(X^2)- (\mathbb{E}(X))^2$
+		}
+	}
+
+\Bsp[(Fortsetztung von oben)]{
+	\begin{align*}
+		Var(X)&= \mathbb{E}((X-\frac{1}{2})^2)\\
+		&= (X-\frac{1}{2})^2 \Pp[X=11] + (-10 - \frac{1}{2})^2 \Pp[X=-10]\\
+		&= (10,5)^2\cdot \frac{1}{2} + (-10,5)^2 \cdot \frac{1}{2} \\
+		&= 110,25 \approx 10^2
+	\end{align*}
+}{
+	\[ \sigma(X)\approx 10^1\qquad \qquad \rightarrow \frac{1}{2} \pm 10^1\]\\
+	\begin{align*}
+		Var(Y) &= \mathbb{E}((Y-\frac{1}{2})^2) \\
+		&= (10^3+1-\frac{1}{2})^2 \cdot \frac{1}{2} + (-10^3 - \frac{1}{2})^2 \cdot \frac{1}{2}\\
+		&= 1001000,25 \approx 10^6
+	\end{align*}\\
+	\[\sigma(Y) \approx 10^3 \qquad\qquad  \rightarrow \frac{1}{2} \pm 10^3\]}
+	\Bem{
+		\punkte{
+			\item $X\approx \mathbb{E}(X) \pm \sigma(X) $ ist eine mathematisch falsche, aber hilfreiche Darstellung, um das Verhalten von $X$ zu veranschaulichen
+		}
+	}		
+}
+
+\newpage
+
+\Def{
+	Seien $X,Y$ Z.Var mit endlichem Erwartungswert. Die \textbf{Kovarianz} von $X$ und $Y$ ist definiert als 
+	\[ Cov(X,Y)= \mathbb{E}(X\cdot Y) - \mathbb{E}(X) \cdot \mathbb{E}(Y)= \mathbb{E}((X - \mathbb{E}(X))(Y - \mathbb{E}(Y)))\]
+	Zwei Z.Var heißen unkorreliert, falls $Cov(X,Y)=0$.
+}
+
+\Satz[(Rechenregeln)]{
+	Seien $X,Y$ Z.Var mit endlichem Erwartungswert, $a,b \in \mathbb{R}$
+	\bspe{
+		\item $Var(aX+b)= a^2 Var(X)$
+		\item $Var(X+Y)= Var(X)+Var(Y)+2 \cdot Cov(X,Y)$
+	}
+}
+
+\Satz{
+	Sei $X,Y$ \textbf{unabhängige} Z.Var. mit endlichem Erwartungswert. Dann gilt 
+	\[ \mathbb{E}(X\cdot Y)= \mathbb{E}(X) \cdot \mathbb{E}(Y)\]
+	Insbesondere sind $X$ und $Y$ unkorreliert und $Var(X+Y)= Var(X) + Var(Y)$.
+	\Bew{
+		\begin{align*}
+			 \mathbb{E}(X\cdot Y)&= \summe{x\in X(\Omega)}{}{\summe{y\in Y(\Omega)}{}{x\cdot y \cdot \Pp[\{X=x\}\cap \{Y=y\}]}} \\
+			 &\overset{unabh.}{=} \summe{x}{}{\summe{y}{}{x\cdot y\cdot \Pp[X=x]\cdot \Pp[Y=y]}} \\
+			 &= (\summe{x}{}{x\cdot \Pp[X=x]})\cdot (\summe{y}{}{y\cdot \Pp[Y=y]})\\
+			 &= \mathbb{E}(X) \cdot \mathbb{E}(Y) 
+		\end{align*}
+	}
+}
+
+\Satz{
+	Sei $X$ eine Z.Var. mit nicht-negativen Werten. Dann gilt für jedes $a>0$ 
+	\[\Pp[X\geq a]\leq \frac{1}{a} \cdot \mathbb{E}(X)\]
+	\Bsp{
+		\[\Pp[X\geq 4 \cdot  \mathbb{E}] \leq \frac{1}{4} \]
+	}{}
+	\Bew{
+		\begin{align*}
+			\mathbb{E}(X)&= \summe{x\in X(\Omega)}{}{x\cdot \Pp[X=x]} \\ 
+			&\overset{x\geq 0}{\geq} \summe{x\geq a}{}{x \cdot \Pp[X=x]} \\ 
+			&\geq \summe{x\geq a}{}{a\cdot \Pp[X=x]} = a\cdot \Pp[X\geq a]
+		\end{align*}
+	}
+}
+
+
+
+
+\end{document} %Dokumentende SAGEMATHCOMMANDS mit zu versch FKT schreiben

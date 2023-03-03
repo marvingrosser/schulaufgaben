@@ -1,0 +1,1 @@
+Winkel zwischen vektoren, wie müssen diese zueinander stehen, damit das Ergebnis zwischen ihnen liegt?

@@ -1,0 +1,170 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fancyheadings}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm]{geometry}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{dsfont}
+\usetikzlibrary{trees}
+
+
+\tikzstyle{level 1}=[level distance=3.5cm, sibling distance=4.5cm]
+\tikzstyle{level 2}=[level distance=3.5cm, sibling distance=2cm]
+
+
+
+% Define styles for bags and leafs
+\tikzstyle{bag} = [text width=2em, text centered]
+\tikzstyle{end} = [circle, minimum width=3pt,fill, inner sep=1pt]
+
+\newcommand{\contradiction}{{\hbox{%
+			\setbox0=\hbox{$\mkern-3mu\times\mkern-3mu$}%
+			\setbox1=\hbox to0pt{\hss$\times$\hss}%
+			\copy0\raisebox{0.5\wd0}{\copy1}\raisebox{-0.5\wd0}{\box1}\box0
+}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fach}{Grenzwerte}
+\newcommand{\Semester}{SoSe 21}
+\newcommand{\Uebungsblatt}{ Lineare Gleichungen und Ungleichungen} 
+\newcommand{\nl}{\\[0,20cm]}
+\newcommand{\lnl}{\\[0,30cm]}
+\newcommand{\xlnl}{\\[0,75cm]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\parindent}{0em}
+\topmargin -2.0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\setlength{\textheight}{9.6in}
+\setlength{\textwidth}{6.9in}
+\addtolength{\hoffset}{-22pt}
+
+
+\newcommand{\limes}[2]{
+	\lim\limits_{x\rightarrow #1}\quad  #2
+}
+\newcommand{\limesh}[1]{
+	\lim\limits_{h\rightarrow 0}\quad  #1
+}
+\newcommand{\limesr}[2]{
+	\lim\limits_{\underset{x > #1}{x\rightarrow #1}}\quad  #2
+}
+\newcommand{\limesl}[2]{
+	\lim\limits_{\underset{x < #1}{x\rightarrow #1}}\quad  #2
+}
+\newcommand{\Aufgabe}[2]{
+	{
+		\vspace*{0.3cm}
+		\begin{tcolorbox}[breakable,colback=yellow!0,colframe=black!65!black,title=\textbf{Aufgabe #1:},width=\linewidth ]
+			{#2}
+		\end{tcolorbox}
+		
+		
+	}
+}
+\newcommand{\Beispiel}[1]{
+	\vspace*{0.3cm}
+	\begin{tcolorbox}[breakable,colback=yellow!0,colframe=green!65!black,title=\textbf{Beispiel:},width=\linewidth ]
+		{#1}
+	\end{tcolorbox}
+}
+\newcommand{\Heuristik}[1]{
+	\vspace*{0.3cm}
+	\begin{tcolorbox}[breakable,colback=yellow!0,colframe=red!65!black,title=\textbf{Wie gehe ich vor?:},width=\linewidth ]
+		{#1}
+	\end{tcolorbox}
+}
+\newcommand{\p}[2]{\pi_{#2}^{(#1)}}
+\newcommand{\eing}[1]{\begin{enumerate}[\quad]
+		\item #1
+\end{enumerate}}
+
+\newcommand{\abc}[1]{
+	\begin{enumerate}[(a)]
+		#1
+	\end{enumerate}
+}
+
+\newcommand{\integral}[4]{\int\limits_{#1}^{#2} {#3} {\quad d #4}}
+\newcommand{\summe}[3]{\sum\limits_{#1}^{#2} #3}
+\begin{document}
+	\thispagestyle{fancy}
+	\begin{center}
+		\LARGE \sf \textbf{ \Uebungsblatt{}}
+	\end{center}
+
+	
+	%<<<
+	\Aufgabe{1 (Gleichungen)}{
+		\Heuristik{
+			Gleichungen sind Aussagen über die Gleichheit von Zahlen. In Worten: Zahl 1 ist genau so groß wie Zahl 2.
+			Solche Gleichungen können wir verändern, in dem wir Äquivalenzumformungen durchführen. 
+			Das heißt in gut Deutsch einfach: Unsere Rechenregeln die wir kennen dürfen wir auf die Gleichung anwenden, müssen aber diese Rechnung immer auf beiden Seiten anwenden. Zum Lösen reicht in der Regel: 
+			\begin{enumerate}[$\circ$]
+				\item Multiplikation mit einer Zahl oder Variable
+				\item Division mit einer Zahl oder Variable
+				\item Addition mit einer Zahl oder Variable
+				\item Substraktion mit einer Zahl oder Variable
+			\end{enumerate}
+			\Beispiel{
+				\begin{align*}
+					4&=4 \qquad\qquad\qquad &| +2\\
+					6&=6 \qquad\qquad\qquad &| *3\\
+					18&=18 \qquad\qquad\qquad &| :2\\
+					9&=9 \qquad\qquad\qquad &| \cdot x\\
+					9x&=9x \qquad\qquad\qquad \\
+				\end{align*}}
+			Man sieht schnell, dass die Gleichheit der Zahlen nie verletzt wird. Also Die Aussage bleibt immer wahr.\\
+			Dass können wir jetzt ausnutzen und bei Gleichungen mit einem $x$ diese so lange umstellen bis wir wissen welchen Wert $x$ haben muss.
+			Dazu bringen wir die Gleichung in die Form:\[ \textbf{[Zahl 1]}\cdot x = \textbf{[Zahl 2]}\]
+			Indem wir in der Ursprungsgleichung nur + und - rechnen.
+			Danach teile durch \textbf{[Zahl 1]}
+			\begin{align*}
+				\underbrace{\frac{\textbf{[Zahl 1]}}{\textbf{[Zahl 1]}}}_{=1}\cdot x = \frac{\textbf{[Zahl 2]}}{\textbf{[Zahl 1]}}\\
+				x= \frac{\textbf{[Zahl 2]}}{\textbf{[Zahl 1]}}
+			\end{align*}
+		}
+		\Beispiel{
+				\begin{align*}
+					3x+3 &= x-1\qquad\qquad\qquad &| -x\\
+					2x+3 &= -1\qquad\qquad\qquad &| -3\\
+					2x &= -4\qquad\qquad\qquad &| : 2\\
+					x&=\frac{-4}{2}= -2
+				\end{align*}
+	}
+		\begin{enumerate}[(a)]
+			\item \[4x+4=3x+3\]
+			\item \[5x-2=x+6\]
+			\item \[3x=x+5\]
+			\item \[7x-9=2x+5\]
+			\item \[\frac{1}{12}x-5=3\]
+			\item \[-8x + 5 = -5\]
+			\item \[x+4=9x-(5-x)\]
+			\item \[3(4x-3)=4(3x-4)\]
+			\item \[3(4x+4)=4(3-4x)\]
+			\item \[3(a-4)=1-\frac{1}{5}(2-a)\]
+		\end{enumerate}
+}
+
+\end{document} 
+
